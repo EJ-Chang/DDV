@@ -4,7 +4,12 @@ import os
 import discord
 from discord.ext import commands
 
-bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
+# Create a Discord client instance and set the command prefix
+intents = discord.Intents.all()
+client = discord.Client(intents=intents)
+bot = commands.Bot(command_prefix='!', intents=intents)
+
+# bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
 
 
 @bot.event
@@ -16,6 +21,7 @@ with open("token.txt") as file:
   token = file.read()
 
 
+# Load every cog in my cogs folder
 async def Load():
   for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):
@@ -29,6 +35,3 @@ async def main():
 
 
 asyncio.run(main())
-# # Retrieve token from the .env file
-# load_dotenv()
-# bot.run(os.getenv('TOKEN'))
