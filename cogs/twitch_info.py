@@ -32,6 +32,8 @@ class Twitch_info(commands.Cog):
       print(f"Error fetching user info: {response.status_code}")
       return None
 
+# 需要多一個函數，利用user name查詢user id，然後把user id 餵給底下使用user id的函數
+# todo：我記得有看到iCalendar之類的東西，可以用看看
   async def get_twitch_schedule(self, user_id):
     url = f'https://api.twitch.tv/helix/schedule?broadcaster_id={user_id}'
     headers = {
