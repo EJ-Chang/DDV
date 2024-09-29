@@ -44,7 +44,7 @@ class Twitch_info(commands.Cog):
     response = requests.get(url, headers=headers)
 
     if response.status_code == 200:
-      return response.json()['data']  # 返回排程資料
+      return response.json()['data'] ['segment'] ['start_time']# 返回排程資料
     else:
       print(f"Error fetching schedule: {response.status_code}")
       return None
@@ -70,8 +70,13 @@ class Twitch_info(commands.Cog):
       return None
 
   @commands.command()
+<<<<<<< HEAD
+  async def viewcarry(self, ctx):
+    user_name = "carrymaybe484"  # Twitch user ID
+=======
   async def view(self, ctx):
     user_name = "v4181"  # Twitch ID
+>>>>>>> c90a018eafaa40e266b2dedc58962d3fd515c402
     user_info = await self.get_twitch_user_info(user_name)
 
     if user_info:
