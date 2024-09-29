@@ -49,34 +49,70 @@ class Twitch_info(commands.Cog):
       print(f"Error fetching schedule: {response.status_code}")
       return None
 
+  # Get current stream info (title, etc.)
+  async def get_twitch_stream_info(self, user_id):
+    url = f'https://api.twitch.tv/helix/streams?user_id={user_id}'
+    headers = {
+        'Client-ID': TWITCH_CLIENT_ID,
+        'Authorization': f'Bearer {TWITCH_TOKEN}'
+    }
+
+    response = requests.get(url, headers=headers)
+
+    if response.status_code == 200:
+      data = response.json()['data']
+      if data:
+        return data[0]  # 返回當前直播的資料
+      else:
+        return None  # 用戶沒有正在直播
+    else:
+      print(f"Error fetching stream info: {response.status_code}")
+      return None
+
   @commands.command()
-  async def viewcarry(self, ctx):
-    user_name = "carrymaybe484"  # Twitch ID
+  async def view(self, ctx):
+    user_name = "v4181"  # Twitch ID
     user_info = await self.get_twitch_user_info(user_name)
 
     if user_info:
       user_id = user_info['id']
       avatar_url = user_info['profile_image_url']
 
-      # 獲取排程資訊
-      schedule_info = await self.get_twitch_schedule(user_id)
+      # # 獲取排程資訊
+      # schedule_info = await self.get_twitch_schedule(user_id)
+
+      # embed = discord.Embed(title=f"{user_name}'s Info")
+      # embed.set_image(url=avatar_url)
+      # 獲取當前直播資訊
+      stream_info = await self.get_twitch_stream_info(user_id)
 
       embed = discord.Embed(title=f"{user_name}'s Info")
       embed.set_image(url=avatar_url)
-
-      if schedule_info:
-        # 格式化排程資訊
-        schedule_text = "\n".join(f"{item['start_time']} - {item['title']}"
-                                  for item in schedule_info)
-        embed.add_field(name="Upcoming Schedule",
-                        value=schedule_text or "No upcoming streams.")
+      if stream_info:
+        # 如果實況主正在直播，顯示標題
+        stream_title = stream_info['title']
+        embed.add_field(name="Current Stream", value=stream_title)
       else:
-        embed.add_field(name="Upcoming Schedule",
-                        value="Could not retrieve schedule.")
+        embed.add_field(name="Current Stream",
+                        value="Not currently streaming.")
 
       await ctx.send(embed=embed)
     else:
       await ctx.send(f"Could not retrieve info for {user_name}.")
+
+    # if schedule_info:
+    #   # 格式化排程資訊
+    #   schedule_text = "\n".join(f"{item['start_time']} - {item['title']}"
+    #                             for item in schedule_info)
+    #   embed.add_field(name="Upcoming Schedule",
+    #                   value=schedule_text or "No upcoming streams.")
+    # else:
+    #   embed.add_field(name="Upcoming Schedule",
+    #                   value="Could not retrieve schedule.")
+
+    # await ctx.send(embed=embed)
+    # else:
+    #   await ctx.send(f"Could not retrieve info for {user_name}.")
 
 
 async def setup(bot):
