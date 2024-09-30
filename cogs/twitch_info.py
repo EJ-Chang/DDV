@@ -1,6 +1,7 @@
 import discord
-from discord.ext import commands
 import requests
+from discord import app_commands
+from discord.ext import commands
 
 # Twitch API 設定
 TWITCH_CLIENT_ID = 'gp762nuuoqcoxypju8c569th9wz7q5'
@@ -32,10 +33,12 @@ class Twitch_info(commands.Cog):
       print(f"Error fetching user info: {response.status_code}")
       return None
 
+
 # 需要多一個函數，利用user name查詢user id，然後把user id 餵給底下使用user id的函數
 # todo：我記得有看到iCalendar之類的東西，可以用看看
-  async def get_twitch_schedule(self, user_id):
-    url = f'https://api.twitch.tv/helix/schedule?broadcaster_id={user_id}'
+
+  async def get_past_streams(self, user_id):
+    url = f'https://api.twitch.tv/helix/videos?user_id={user_id}&type=archive'
     headers = {
         'Client-ID': TWITCH_CLIENT_ID,
         'Authorization': f'Bearer {TWITCH_TOKEN}'
@@ -44,15 +47,25 @@ class Twitch_info(commands.Cog):
     response = requests.get(url, headers=headers)
 
     if response.status_code == 200:
-      return response.json()['data'] ['segment'] ['start_time']# 返回排程資料
+      data = response.json()
+      # 印出第一個影片的相關資料作為範例
+      if 'data' in data and len(data['data']) > 0:
+        video = data['data'][1]  # 前一次實況
+        print(f"Title: {video['title']}")
+        print(f"Created at: {video['created_at']}")
+        print(f"URL: {video['url']}")
+        return data['data']  # 返回所有過去影片的資料
+      else:
+        print("No past streams found.")
+        return None
     else:
-      print(f"Error fetching schedule: {response.status_code}")
+      print(f"Error fetching past streams: {response.status_code}")
       return None
 
   # Get current stream info (title, etc.)
   async def get_twitch_stream_info(self, user_id):
     # url = f'https://api.twitch.tv/helix/streams?user_id={user_id}'
-    url = f'https://api.twitch.tv/helix/chnnels?broadcaster_id={user_id}'
+    url = f'https://api.twitch.tv/helix/channels?broadcaster_id={user_id}'
     headers = {
         'Client-ID': TWITCH_CLIENT_ID,
         'Authorization': f'Bearer {TWITCH_TOKEN}'
@@ -93,9 +106,20 @@ class Twitch_info(commands.Cog):
                         value="Not currently streaming.")
 
       await ctx.send(embed=embed)
+      # get schedule
+      past_streams = await self.get_past_streams(user_id)
+      if past_streams:
+        embed.add_field(name="Schedule", value=past_streams)
+
     else:
       await ctx.send(f"Could not retrieve info for {user_name}.")
 
 
 async def setup(bot):
   await bot.add_cog(Twitch_info(bot))
+
+
+# memo:
+# 當前直播資訊&last time stream info get
+# todo:
+# select streamer
