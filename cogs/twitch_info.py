@@ -83,8 +83,8 @@ class Twitch_info(commands.Cog):
       print(f"Error fetching stream info: {response.status_code}")
       return None
 
-  @commands.command()
-  async def view(self, ctx):
+  @app_commands.command()
+  async def view(self, interaction: discord.Interaction):
     user_name = "v4181"  # Twitch ID
     user_info = await self.get_twitch_user_info(user_name)
 
@@ -105,14 +105,15 @@ class Twitch_info(commands.Cog):
         embed.add_field(name="Current Stream",
                         value="Not currently streaming.")
 
-      await ctx.send(embed=embed)
+      await interaction.response.send_message(embed=embed)
       # get schedule
       past_streams = await self.get_past_streams(user_id)
       if past_streams:
         embed.add_field(name="Schedule", value=past_streams)
 
     else:
-      await ctx.send(f"Could not retrieve info for {user_name}.")
+      await interaction.response.send_message(
+          f"Could not retrieve info for {user_name}.")
 
 
 async def setup(bot):
