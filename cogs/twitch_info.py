@@ -51,9 +51,6 @@ class Twitch_info(commands.Cog):
       # 印出第一個影片的相關資料作為範例
       if 'data' in data and len(data['data']) > 0:
         video = data['data'][1]  # 前一次實況
-        print(f"Title: {video['title']}")
-        print(f"Created at: {video['created_at']}")
-        print(f"URL: {video['url']}")
         return data['data']  # 返回所有過去影片的資料
       else:
         print("No past streams found.")
