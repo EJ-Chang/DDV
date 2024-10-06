@@ -95,7 +95,7 @@ class Twitch_info(commands.Cog):
 
     return None, None, None
 
-  @app_commands.command(name="time_travel", description="檢查特定時間是否有實況並返回影片連結")
+  @app_commands.command(name="time_travel", description="檢查特定時間是否有實況並回傳影片連結")
   async def time_travel(self, interaction: discord.Interaction, user_name: str,
                         month: int, day: int, hour: int, minute: int):
     # 獲取當前的年份

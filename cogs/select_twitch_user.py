@@ -73,9 +73,12 @@ class SelectTwitchUser(discord.ui.Select):
                 for stream in past_3_streams:
                     title = stream['title']
                     vod_url = stream['url']
-                    embed.add_field(name=f"VOD Title",
-                                    value=f"[{title}]({vod_url})",
-                                    inline=False)
+                    vod_created_time = stream['created_at']
+                    embed.add_field(
+                        name=
+                        f"Last VOD from {user_name}, at {vod_created_time}",
+                        value=f"[{title}]({vod_url})",
+                        inline=False)
 
                 await interaction.response.send_message(embed=embed)
             else:
