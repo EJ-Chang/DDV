@@ -1,0 +1,29 @@
+{
+  "streamers": [
+    {
+      "name": "KSP",
+      "twitch_id": "kspksp",
+      "hex_color": "#6f42c1"
+    },
+    {
+      "name": "Seki",
+      "twitch_id": "seki_meridian",
+      "hex_color": "#C6CC77"
+    },
+    {
+      "name": "Utiao",
+      "twitch_id": "v4181",
+      "hex_color": "#992f31"
+    },
+    {
+      "name": "Yuzumi",
+      "twitch_id": "yuzumi_neon",
+      "hex_color": "#FD8D4E"
+    },
+    {
+      "name": "OW2",
+      "twitch_id": "ow_esports",
+      "hex_color": "#ed6517"
+    }
+  ]
+}
