@@ -11,7 +11,7 @@
       "hex_color": "#8aa133"
     },
     {
-      "name": "Utiao",
+      "name": "油條",
       "twitch_name": "v4181",
       "hex_color": "#992f31"
     },
@@ -21,9 +21,20 @@
       "hex_color": "#FD8D4E"
     },
     {
+      "name": "米姬",
+      "twitch_name": "migi_tw",
+      "hex_color": "#a7c5d7"
+    },
+    {
+      "name": "烟花蹦蹦蹦",
+      "twitch_name": "hennie2001",
+      "hex_color": "#cd96a8"
+    },
+    {
       "name": "OW2",
       "twitch_name": "ow_esports",
       "hex_color": "#ed6517"
     }
+  
   ]
 }
