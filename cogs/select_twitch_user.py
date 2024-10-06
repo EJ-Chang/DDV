@@ -1,5 +1,6 @@
 import discord
 import requests
+import json
 from discord.ext import commands
 from discord import app_commands
 
@@ -8,28 +9,34 @@ TWITCH_CLIENT_ID = 'gp762nuuoqcoxypju8c569th9wz7q5'
 TWITCH_TOKEN = '9de116c56fbj6qn27ald7so9q2w5ai'
 
 
+# 讀取 JSON 檔案中的實況主資料
+def load_streamer_data(file_path):
+    with open(file_path, 'r', encoding='utf-8') as f:
+        return json.load(f)['streamers']
+
+
+# 將 HEX 顏色轉換為 Discord 支持的顏色格式
+def hex_to_rgb_int(hex_color):
+    hex_color = hex_color.lstrip('#')  # 移除 #
+    return int(hex_color, 16)  # 將HEX轉為整數
+
+
 class SelectTwitchUser(discord.ui.Select):
 
-    def __init__(self, bot):
+    def __init__(self, bot, streamer_data):
         self.bot = bot
+        self.streamer_data = {
+            streamer['twitch_name']: streamer
+            for streamer in streamer_data
+        }
 
-        # Twitch 選項列表
+        # 根據 streamer_data 動態生成 Twitch 選項列表
         options = [
-            discord.SelectOption(label="KSP",
-                                 description="Twitch ID: KSP",
-                                 value="kspksp"),
-            discord.SelectOption(label="Seki",
-                                 description="Twitch ID: Seki",
-                                 value="seki_meridian"),
-            discord.SelectOption(label="Utiao",
-                                 description="Twitch ID: 油條Utiao",
-                                 value="v4181"),
-            discord.SelectOption(label="Yuzumi",
-                                 description="Twitch ID: Yuzumi",
-                                 value="yuzumi_neon"),
-            discord.SelectOption(label="OW2",
-                                 description="Twitch ID: Overwatch Esports",
-                                 value="ow_esports")
+            discord.SelectOption(
+                label=streamer['name'],
+                description=f"Twitch ID: {streamer['twitch_name']}",
+                value=streamer['twitch_name'],
+            ) for streamer in streamer_data
         ]
 
         super().__init__(placeholder="Choose a Twitch user",
@@ -46,9 +53,14 @@ class SelectTwitchUser(discord.ui.Select):
             user_id = user_info['id']
             avatar_url = user_info['profile_image_url']
 
-            # 創建嵌入消息，包含用戶ID和頭像
+            # 從 streamer_data 中獲取對應的代表色
+            streamer = self.streamer_data.get(user_name)
+            embed_color = hex_to_rgb_int(
+                streamer['hex_color']) if streamer else discord.Color.random()
+
+            # 創建嵌入消息，包含用戶ID和頭像，並使用代表色
             embed = discord.Embed(title=f"Twitch User: {user_name}",
-                                  color=discord.Color.random())
+                                  color=embed_color)
             embed.set_thumbnail(url=avatar_url)  # 顯示用戶頭像
 
             # 獲取最近3個VOD
@@ -76,9 +88,9 @@ class SelectTwitchUser(discord.ui.Select):
 
 class SelectTwitchMenu(discord.ui.View):
 
-    def __init__(self, bot):
+    def __init__(self, bot, streamer_data):
         super().__init__()
-        self.add_item(SelectTwitchUser(bot))
+        self.add_item(SelectTwitchUser(bot, streamer_data))
 
 
 class TwitchCog(commands.Cog):
@@ -127,10 +139,12 @@ class TwitchCog(commands.Cog):
     @app_commands.command(name="select_stream",
                           description="Select a Twitch user.")
     async def select_stream(self, interaction: discord.Interaction):
+        # 讀取實況主資料
+        streamer_data = load_streamer_data('streamers.json')
         # 顯示下拉選單讓使用者選擇 Twitch 使用者
         await interaction.response.send_message("Please choose a Twitch user:",
                                                 view=SelectTwitchMenu(
-                                                    self.bot))
+                                                    self.bot, streamer_data))
 
 
 async def setup(bot):
