@@ -1,8 +1,9 @@
+import datetime
+
 import discord
 import requests
 from discord import app_commands
 from discord.ext import commands
-import datetime
 
 # Twitch API 設定
 TWITCH_CLIENT_ID = 'gp762nuuoqcoxypju8c569th9wz7q5'
@@ -27,7 +28,10 @@ class SelectTwitchUser(discord.ui.Select):
                                  value="v4181"),
             discord.SelectOption(label="Yuzumi",
                                  description='Twitch ID: Yuzumi',
-                                 value="yuzumi_neon")
+                                 value="yuzumi_neon"),
+            discord.SelectOption(label="OW2",
+                                 description='Twitch ID: Overwatch Esports',
+                                 value="ow_esports")
         ]
 
         super().__init__(placeholder="Choose a Twitch user",
@@ -57,6 +61,20 @@ class SelectTwitchUser(discord.ui.Select):
                 embed.add_field(name="Stream Title",
                                 value=stream_title,
                                 inline=False)
+                embed.add_field(name="Stream URL",
+                                value=f"https://www.twitch.tv/{user_name}")
+
+                # past_3_streams = await self.bot.get_cog(
+                #     'TwitchCog').get_latest_streams(user_id)
+                # if past_3_streams:
+                #     print("Have 3 stream")
+                #     embed.add_field(name="Past 3 Streams",
+                #                     value="\n".join([
+                #                         f"[{stream['title']}]({stream['url']})"
+                #                         for stream in past_3_streams
+                #                     ]),
+                #                     inline=False)
+
             else:
                 embed.add_field(name="Stream Title",
                                 value="User is not streaming",
@@ -111,6 +129,33 @@ class TwitchCog(commands.Cog):
             print(f"Error fetching stream info: {response.status_code}")
             return None
 
+    # Get previous VODs
+    def get_latest_streams(self, user_id):
+        # 定義 Twitch API 的 Client ID 和 Access Token
+        BASE_URL = "https://api.twitch.tv/helix/videos"
+
+        headers = {
+            'Client-ID': TWITCH_CLIENT_ID,
+            'Authorization': f'Bearer {TWITCH_TOKEN}'
+        }
+
+        # 設定參數取得最新的 3 個實況影片
+        params = {
+            "user_id": user_id,
+            "first": 3,
+            "sort": "time",
+            "type": "archive"  # 只取直播回放
+        }
+
+        response = requests.get(BASE_URL, headers=headers, params=params)
+        # print(response)
+        if response.status_code == 200:
+            return response.json().get('data', [])
+
+        else:
+            return []
+
+    # Define slash command
     @app_commands.command(name="select_stream",
                           description="Select a Twitch user.")
     async def select_stream(self, interaction: discord.Interaction):
