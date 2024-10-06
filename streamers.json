@@ -6,19 +6,9 @@
       "hex_color": "#6f42c1"
     },
     {
-      "name": "Seki",
+      "name": "汐Seki",
       "twitch_name": "seki_meridian",
       "hex_color": "#8aa133"
-    },
-    {
-      "name": "油條",
-      "twitch_name": "v4181",
-      "hex_color": "#992f31"
-    },
-    {
-      "name": "Yuzumi",
-      "twitch_name": "yuzumi_neon",
-      "hex_color": "#FD8D4E"
     },
     {
       "name": "米姬",
@@ -31,9 +21,34 @@
       "hex_color": "#cd96a8"
     },
     {
-      "name": "OW2",
-      "twitch_name": "ow_esports",
-      "hex_color": "#ed6517"
+      "name": "油條",
+      "twitch_name": "v4181",
+      "hex_color": "#992f31"
+    },
+    {
+      "name": "響Hibiki",
+      "twitch_name": "HibikiVtuberTW",
+      "hex_color": "#fad864"
+    },
+    {
+      "name": "橙Yuzumi",
+      "twitch_name": "yuzumi_neon",
+      "hex_color": "#FD8D4E"
+    },
+    {
+      "name": "澪Rei",
+      "twitch_name": "reirei_neon",
+      "hex_color": "#c9e0ee"
+    },
+    {
+      "name": "煌Kirali",
+      "twitch_name": "kirali_neon",
+      "hex_color": "#bd6c85"
+    },
+    {
+      "name": "浠Mizuki",
+      "twitch_name": "mizukimilk723",
+      "hex_color": "#88d7d9"
     }
   
   ]
