@@ -21,12 +21,12 @@ async def on_ready():
 
 
 # Get token
-with open("token.txt") as file:
-  token = file.read()
+# with open("token.txt") as file:
+#   token = file.read()
+token = os.environ['DISCORD_BOT_TOKEN']
+
 
 # Load every cog in my cogs folder
-
-
 async def Load():
   for filename in os.listdir('./cogs'):
     if filename.endswith('.py'):

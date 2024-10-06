@@ -1,9 +1,12 @@
-import discord
-import requests
 import json
 import os
-from discord.ext import commands
+from datetime import datetime, timedelta
+
+import discord
+import pytz  # 用來處理時區
+import requests
 from discord import app_commands
+from discord.ext import commands
 
 # Twitch API 設定
 # TWITCH_CLIENT_ID = 'gp762nuuoqcoxypju8c569th9wz7q5'
@@ -73,12 +76,18 @@ class SelectTwitchUser(discord.ui.Select):
                 for stream in past_3_streams:
                     title = stream['title']
                     vod_url = stream['url']
-                    vod_created_time = stream['created_at']
-                    embed.add_field(
-                        name=
-                        f"Last VOD from {user_name}, at {vod_created_time}",
-                        value=f"[{title}]({vod_url})",
-                        inline=False)
+
+                    # 定義 GMT+8 時區（台北）
+                    gmt_plus_8 = pytz.timezone('Asia/Taipei')
+                    # 將 VOD 創建時間從 ISO 格式轉換為 GMT+8 時間
+                    vod_created_time = datetime.fromisoformat(
+                        stream['created_at'][:-1]).astimezone(
+                            gmt_plus_8).strftime('%Y年 %m月 %d日，%H:%M:%S')
+
+                    # 在 Embed message 中，列出 VOD 創建時間、標題以及連結
+                    embed.add_field(name=f"實況開始時間: {vod_created_time}",
+                                    value=f"[{title}]({vod_url})",
+                                    inline=False)
 
                 await interaction.response.send_message(embed=embed)
             else:

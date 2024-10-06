@@ -1,10 +1,11 @@
-import discord
 import os
-from discord.ext import commands
-from discord import app_commands
 from datetime import datetime, timedelta
+
+import discord
 import pytz  # 用來處理時區
 import requests
+from discord import app_commands
+from discord.ext import commands
 
 # Twitch API 設定
 # TWITCH_CLIENT_ID = 'gp762nuuoqcoxypju8c569th9wz7q5'
@@ -118,7 +119,7 @@ class Twitch_info(commands.Cog):
           user_id, target_time_utc)
 
       embed = discord.Embed(title=f"{user_name}'s Info")
-      embed.set_image(url=avatar_url)
+      embed.set_thumbnail(url=avatar_url)
 
       # 新增查詢時間的顯示
       query_time = f"{month}月{day}日 {hour}點{minute}分"
@@ -127,14 +128,12 @@ class Twitch_info(commands.Cog):
       if vod_url:
         # 返回帶時間戳的影片連結和 VOD 標題
         timestamp_url = f"{vod_url}?t={timestamp_seconds}s"
-        embed.add_field(name="Stream Status",
-                        value=f"當時有實況，這是對應的 [影片連結]({timestamp_url})",
+        embed.add_field(name="Stream Status", value="當時有開台", inline=False)
+        embed.add_field(name="實況連結(帶有時間戳記)",
+                        value=f"[{vod_title}]({timestamp_url})",
                         inline=False)
-        embed.add_field(name="VOD Title", value=f"{vod_title}", inline=False)
       else:
-        embed.add_field(name="Stream Status",
-                        value="在該時間沒有實況進行。",
-                        inline=False)
+        embed.add_field(name="Stream Status", value="當時沒有開台", inline=False)
 
       await interaction.response.send_message(embed=embed)
 
