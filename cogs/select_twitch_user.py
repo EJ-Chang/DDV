@@ -9,8 +9,6 @@ from discord import app_commands
 from discord.ext import commands
 
 # Twitch API 設定
-# TWITCH_CLIENT_ID = 'gp762nuuoqcoxypju8c569th9wz7q5'
-# TWITCH_TOKEN = '9de116c56fbj6qn27ald7so9q2w5ai'
 TWITCH_TOKEN = os.environ['TWITCH_TOKEN']
 TWITCH_CLIENT_ID = os.environ['TWITCH_CLIENT_ID']
 
@@ -59,17 +57,17 @@ class SelectTwitchUser(discord.ui.Select):
             user_id = user_info['id']
             avatar_url = user_info['profile_image_url']
 
-            # 從 streamer_data 中獲取對應的代表色
+            # 從 streamer_data 中取得對應的代表色
             streamer = self.streamer_data.get(user_name)
             embed_color = hex_to_rgb_int(
                 streamer['hex_color']) if streamer else discord.Color.random()
 
-            # 創建嵌入消息，包含用戶ID和頭像，並使用代表色
+            # 建立 embed message，包含ID和頭像，並使用代表色
             embed = discord.Embed(title=f"Twitch User: {user_name}",
                                   color=embed_color)
-            embed.set_thumbnail(url=avatar_url)  # 顯示用戶頭像
+            embed.set_thumbnail(url=avatar_url)  # 顯示頭像
 
-            # 獲取最近3個VOD
+            # 取得最近3個VOD
             past_3_streams = await self.bot.get_cog(
                 'TwitchCog').get_latest_3_streams(user_id)
             if past_3_streams:
@@ -124,7 +122,7 @@ class TwitchCog(commands.Cog):
         response = requests.get(url, headers=headers)
 
         if response.status_code == 200:
-            return response.json()['data'][0]  # 返回用戶資料
+            return response.json()['data'][0]  # user data
         else:
             print(f"Error fetching user info: {response.status_code}")
             return None
@@ -142,7 +140,7 @@ class TwitchCog(commands.Cog):
         if response.status_code == 200:
             data = response.json()
             if 'data' in data and len(data['data']) > 0:
-                return data['data'][:3]  # 只返回最近3個VOD
+                return data['data'][:3]  # 只取最近3個VOD
             else:
                 print("No past streams found.")
                 return None
@@ -156,8 +154,8 @@ class TwitchCog(commands.Cog):
     async def select_stream(self, interaction: discord.Interaction):
         # 讀取實況主資料
         streamer_data = load_streamer_data('streamers.json')
-        # 顯示下拉選單讓使用者選擇 Twitch 使用者
-        await interaction.response.send_message("Please choose a Twitch user:",
+        # 顯示下拉選單讓使用者選擇清單中的 Twitch 實況主
+        await interaction.response.send_message("選擇實況主/Vtuber的 Twitch 頻道:",
                                                 view=SelectTwitchMenu(
                                                     self.bot, streamer_data))
 
