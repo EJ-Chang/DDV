@@ -5,4 +5,4 @@
 ### Related Badges
 ![image]({[BadgeURLHere](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)})
 ![image]({[BadgeURLHere](https://img.shields.io/badge/replit-667881?style=for-the-badge&logo=replit&logoColor=white)})
-![image]({https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue})
+![image](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)
