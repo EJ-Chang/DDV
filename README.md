@@ -1,6 +1,8 @@
 ### 專案介紹
 這專案只是我用來複習多年沒碰的python，以及嘗試利用 AI 幫助我學習以前沒用過的東西，例如使用 Discord API 以及 Twitch API。
-開發這隻小機器人的動機是為了方便自己當個補檔DD。
+開發這隻小機器人的動機是為了方便自己當個補檔 DD。機器人命名靈感來自我最愛的女團「煌Sir有汐」歌詞：知道你們沒看DVD但很會DDV。
+
+聲明：開發/學習過程中有受到 AI 的許多幫助，之後會再把內容重新用我的方式再寫一次，讓它真正變成我學習、消化後的樣子。
 
 ### Related Badges
 ![image](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)
