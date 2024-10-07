@@ -15,9 +15,9 @@ bot = commands.Bot(command_prefix='!', intents=intents)
 # Tell me whether the bot is online
 @bot.event
 async def on_ready():
-  slash = await bot.tree.sync()
-  print(f'Load {len(slash)} slash command(s).')
-  print(f"Logged in as {bot.user.name}")
+    slash = await bot.tree.sync()
+    print(f'Load {len(slash)} slash command(s).')
+    print(f"Logged in as {bot.user.name}")
 
 
 # Get token
@@ -28,16 +28,16 @@ token = os.environ['DISCORD_BOT_TOKEN']
 
 # Load every cog in my cogs folder
 async def Load():
-  for filename in os.listdir('./cogs'):
-    if filename.endswith('.py'):
-      await bot.load_extension(f'cogs.{filename[:-3]}')
+    for filename in os.listdir('./cogs'):
+        if filename.endswith('.py'):
+            await bot.load_extension(f'cogs.{filename[:-3]}')
 
 
 # Run main script
 async def main():
-  async with bot:
-    await Load()
-    await bot.start(token)
+    async with bot:
+        await Load()
+        await bot.start(token)
 
 
 asyncio.run(main())
