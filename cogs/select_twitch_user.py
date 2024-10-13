@@ -162,3 +162,9 @@ class TwitchCog(commands.Cog):
 
 async def setup(bot):
     await bot.add_cog(TwitchCog(bot))
+
+
+# TODO:
+# 1.檢查是否正在實況中，假如正在實況，而查詢的時間點屬於這次直播，則告知使用者目前正在實況:「目前ＸＸＸ正在實況，以下連結會帶您回到稍早的畫面」
+# 2.回覆最新三個實況時，包含正在直播資訊
+# 3. 

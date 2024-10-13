@@ -17,13 +17,13 @@ class Test(commands.Cog):
     # Get ping of the bot
     async def ping(self, interaction: discord.Interaction):
         ping_embed = discord.Embed(title="Ping",
-                                                             description="Latency in ms",
-                                                             color=discord.Color.random())
+                                   description="Latency in ms",
+                                   color=discord.Color.random())
         ping_embed.add_field(name=f"{self.bot.user.display_name}'s latency (ms)",
-                                                 value=f"{round(self.bot.latency * 1000)}ms.",
-                                                 inline=False)
+                             value=f"{round(self.bot.latency * 1000)}ms.",
+                             inline=False)
         ping_embed.set_footer(text=f"請求由 {interaction.user.display_name} 發送",
-                                                    icon_url=interaction.user.avatar)
+                              icon_url=interaction.user.avatar)
         await interaction.response.send_message(embed=ping_embed)
 
     # Greeting
