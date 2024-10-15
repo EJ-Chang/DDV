@@ -144,7 +144,13 @@ async def setup(bot):
     await bot.add_cog(Twitch_info(bot))
 
 
-# memo:
-# 當前直播資訊&last time stream info get
-# todo:
-# select streamer
+# NOTE:
+# 當下直播資訊 & last time stream info get
+# TODO:
+# 假設正在實況中，取得該實況稍早的時間戳記與連結（可以嗎？
+# TODO:
+# 轉發直接取得時間戳，但這個會擔心別人覺得怪怪的。可能要先確認會不會被察覺到
+# TODO:
+# 整理函式架構，把查詢的功能全部拉出來，不要綁在機器人命令裡面
+# FIXME:
+# 回查秒數有差。因為現在 time travel 時間輸入只有到分，直接回推原本 VOD 會產生一分鐘左右的誤差
