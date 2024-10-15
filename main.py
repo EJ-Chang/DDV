@@ -12,12 +12,17 @@ bot = commands.Bot(command_prefix='!', intents=intents)
 # bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
 
 
-# Tell me whether the bot is online
 @bot.event
 async def on_ready():
+    # 同步 slash 指令
     slash = await bot.tree.sync()
     print(f'Load {len(slash)} slash command(s).')
     print(f"Logged in as {bot.user.name}")
+
+    # 設定狀態為「聽音樂」
+    activity = discord.Activity(type=discord.ActivityType.listening,
+                                name="煌Sir有汐")
+    await bot.change_presence(status=discord.Status.online, activity=activity)
 
 
 # Get token
