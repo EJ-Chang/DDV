@@ -19,6 +19,21 @@
 - [ ] select channel 功能加強
 - [ ] 新功能公告機制
 
+### Commands
+
+1. /time_travel: 需要手動輸入實況主的 ID
+   1. 以 Seki 為例，user_namee 欄位要輸入她 twitch 帳號也就是 seki_meridian
+      ![image](./assets/demo/user%20name.png)
+   2. 接著輸入想查詢的時間點，年份已經預設為今年2024，只需手動輸入日期與時間。這裡則以 KSP 為例，假設想查詢的時間點為 10/10 01:23
+      ![image](./assets/demo/mins.png)
+
+2. /select_channel: 選擇指令並送出即可，不必另外輸入任何東西。
+   1. 機器人會回覆一個下拉式選單，可以選擇想查詢的實況主/Vtuber，機器人會查出他/她最近的三則 VOD
+      ![image](./assets/demo/select%20stream.png)
+      ![image](./assets/demo/select%20stream%20feedback.png)
+
+3. /demo(not yet)
+a
 ### Roadmap
 
 1. 支援 Youtube
