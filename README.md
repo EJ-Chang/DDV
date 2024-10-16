@@ -4,9 +4,11 @@
 
 聲明：開發/學習過程中有受到 AI 的許多幫助，之後會再把內容重新用我的方式再寫一次，讓它真正變成我學習、消化後的樣子。
 ### Todos
--[ ] 修改成不用手動輸入完整twitch user name
--[ ] select channel 功能加強
-
+- [ ] 修改成不用手動輸入完整twitch user name
+- [ ] select channel 功能加強
+- [ ] 機器人權限調整
+- [ ] /demo 說明
+- [ ] 新功能公告機制
 
 ### 後續目標
 1. 支援 Youtube
