@@ -1,4 +1,6 @@
-# README
+# Baby DD
+
+> The beta version of DDV.
 
 ## 專案介紹
 
