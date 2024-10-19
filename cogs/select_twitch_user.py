@@ -19,7 +19,7 @@ def load_streamer_data(file_path):
         return json.load(f)['streamers']
 
 
-# 將 HEX 顏色轉換為 Discord 支持的顏色格式
+# 將 HEX 顏色轉換為 Discord 支援的顏色格式
 def hex_to_rgb_int(hex_color):
     hex_color = hex_color.lstrip('#')  # 移除 #
     return int(hex_color, 16)  # 將HEX轉為整數
