@@ -138,9 +138,14 @@ class Twitch_info(commands.Cog):
         else:
             await interaction.response.send_message(f"無法取得 {user_name} 的資訊。",
                                                                                             ephemeral=True)
+    # Try add context menu in cogs
+    @app_commands.context_menu()
+    async def react(self, interaction: discord.Interaction, message: discord.Message):
+        await interaction.response.send_message('Very cool message!', ephemeral=True)
 
-
+# Setup the bot
 async def setup(bot):
+
     await bot.add_cog(Twitch_info(bot))
 
 

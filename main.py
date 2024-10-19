@@ -18,7 +18,10 @@ async def on_ready():
     # 同步 slash 指令
     slash = await bot.tree.sync()
     print(f'Load {len(slash)} slash command(s).')
-    print(f"Logged in as {bot.user.name}")
+    if bot.user:
+        print(f"Logged in as {bot.user.name}")
+    else:
+        print('BabyDD: Something went wrong while initiating the bot.')
 
     # 設定狀態為「聽音樂」
     # 目前好像只有聽(音樂) 玩(遊戲) 跟觀賞什麼可以選
