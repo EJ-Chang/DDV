@@ -12,6 +12,9 @@ class Dc_handler(commands.Cog):
     async def on_ready(self):
         print(f'{__name__} is online!')
 
+
+
+
     # @app_commands.command(name='greet', description='Greet the user.')
     # async def greet(self, interaction: discord.Interaction):
     #   response = 'Hello, I am your discord bot'
@@ -22,11 +25,11 @@ class Dc_handler(commands.Cog):
         if ctx.message.reference:
             # 抓取被回覆的消息的 ID
             replied_message = await ctx.channel.fetch_message(
-                    ctx.message.reference.message_id)
+                ctx.message.reference.message_id)
 
             # 發送回覆消息的內容和發送時間
             await ctx.send(
-                    f"Replied message content: {replied_message.content}\nSent at: {replied_message.created_at}"
+                f"Replied message content: {replied_message.content}\nSent at: {replied_message.created_at}"
             )
             await ctx.send(f"Replied message ID: {replied_message.id}")
         else:
