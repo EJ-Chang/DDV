@@ -4,7 +4,7 @@ from pickle import TRUE
 
 import discord
 from discord.ext import commands
-from twitch_info import TwitchInfo  # 匯入 TwitchInfo 類別
+# from twitch_info import TwitchInfo  # 匯入 TwitchInfo 類別
 
 # Create a Discord client instance and set the command prefix
 intents = discord.Intents.all()
@@ -27,14 +27,33 @@ async def on_ready():
     # 設定狀態為「聽音樂」
     # 目前好像只有聽(音樂) 玩(遊戲) 跟觀賞什麼可以選
     activity = discord.Activity(type=discord.ActivityType.listening,
-                                name="煌Sir有汐") 
-                                # TODO:想要 random or 跑馬燈
+                                name="煌Sir有汐")
+    # TODO:想要 random or 跑馬燈
     await bot.change_presence(status=discord.Status.online, activity=activity)
 
-# Context menu: Join Time
+
+# ADD context menu
 @bot.tree.context_menu(name="Show join date")
-async def get_joined_date(interaction: discord.Interaction, member: discord.Member):
-    await interaction.response.send_message(f'Member joined at: {member.joined_at}', ephemeral=True)
+async def get_joined_date(interaction: discord.Interaction,
+                          member: discord.Member):
+    if member.joined_at:
+        await interaction.response.send_message(
+            f'Member joined at: {discord.utils.format_dt(member.joined_at)}')
+    else:
+        await interaction.response.send_message('Join date unknown.')
+
+
+# ADD context menu
+@bot.tree.context_menu(name="Show msg create date")
+async def get_message_create_date(interaction: discord.Interaction,
+                                  message: discord.Message):
+    if message.created_at:
+        await interaction.response.send_message(
+            f'This msg was created at: {discord.utils.format_dt(message.created_at)}'
+        )
+    else:
+        await interaction.response.send_message('MSG date unknown.')
+
 
 # Context menu: Message creation time
 @bot.tree.context_menu(name="MSG create time")
@@ -47,17 +66,21 @@ async def get_message_create_date(interaction: discord.Interaction,
     else:
         await interaction.response.send_message('MSG date unknown.')
 
+
 # Context menu: MSG time to VOD feedback
 @bot.tree.context_menu(name='MSG_VOD')
-async def get_msg_for_timetravel(interaction: discord.Interaction,
-                                 message: discord.Message,):
+async def get_msg_for_timetravel(
+    interaction: discord.Interaction,
+    message: discord.Message,
+):
     cog = bot.get_cog('TwitchInfo')
     commands = cog.get_commands()
     print([c.name for c in commands])
     if message.created_at:
         MSG_TIME = message.created_at
         # user_name= 'seki_meridian'
-        await interaction.response.send_message(f'MSG created at: {discord.utils.format_dt(MSG_TIME)} ')
+        await interaction.response.send_message(
+            f'MSG created at: {discord.utils.format_dt(MSG_TIME)} ')
 
     else:
         await interaction.response.send_message('Error in MSG VOD')
@@ -76,7 +99,6 @@ async def get_msg_for_timetravel(interaction: discord.Interaction,
 #     else:
 #         print("TwitchInfo cog 未加載")
 
-
 # Get token
 # with open("token.txt") as file:
 #   token = file.read()
@@ -88,7 +110,6 @@ async def Load():
     for filename in os.listdir('./cogs'):
         if filename.endswith('.py'):
             await bot.load_extension(f'cogs.{filename[:-3]}')
-
 
 
 # Run main script
