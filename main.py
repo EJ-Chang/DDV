@@ -3,7 +3,6 @@ import os
 from pickle import TRUE
 
 import discord
-from discord import app_commands
 from discord.ext import commands
 
 # Create a Discord client instance and set the command prefix
@@ -45,6 +44,7 @@ async def Load():
     for filename in os.listdir('./cogs'):
         if filename.endswith('.py'):
             await bot.load_extension(f'cogs.{filename[:-3]}')
+
 
 
 # Run main script
