@@ -55,49 +55,12 @@ async def get_message_create_date(interaction: discord.Interaction,
         await interaction.response.send_message('MSG date unknown.')
 
 
-# Context menu: Message creation time
-@bot.tree.context_menu(name="MSG create time")
-async def get_message_create_date(interaction: discord.Interaction,
-                                  message: discord.Message):
-    if message.created_at:
-        await interaction.response.send_message(
-            f'This msg was created at: {discord.utils.format_dt(message.created_at)}'
-        )
-    else:
-        await interaction.response.send_message('MSG date unknown.')
-
-
 # Context menu: MSG time to VOD feedback
-@bot.tree.context_menu(name='MSG_VOD')
-async def get_msg_for_timetravel(
-    interaction: discord.Interaction,
-    message: discord.Message,
-):
-    cog = bot.get_cog('TwitchInfo')
-    commands = cog.get_commands()
-    print([c.name for c in commands])
-    if message.created_at:
-        MSG_TIME = message.created_at
-        # user_name= 'seki_meridian'
-        await interaction.response.send_message(
-            f'MSG created at: {discord.utils.format_dt(MSG_TIME)} ')
-
-    else:
-        await interaction.response.send_message('Error in MSG VOD')
-
-
-# # 在 main.py 中呼叫 TwitchInfo 的方法
-# async def use_check_stream_at_time(user_id, target_time_utc):
-#     # 取得 TwitchInfo cog 實例
-#     cog = bot.get_cog("TwitchInfo")
-#     if cog:
-#         # 調用 check_stream_at_time 方法
-#         vod_url, timestamp_seconds, vod_title = await cog.check_stream_at_time(
-#             user_id, target_time_utc
-#         )
-#         print(f"VOD URL: {vod_url}, Timestamp: {timestamp_seconds}, Title: {vod_title}")
-#     else:
-#         print("TwitchInfo cog 未加載")
+# @bot.tree.context_menu(name='MSG_VOD')
+# async def get_msg_for_timetravel(
+#     interaction: discord.Interaction,
+#     message: discord.Message,
+# ):
 
 # Get token
 # with open("token.txt") as file:
