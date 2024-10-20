@@ -149,8 +149,7 @@ class TwitchCog(commands.Cog):
             return None
 
     # Define slash command
-    @app_commands.command(name="select_stream",
-                          description="Select a Twitch user.")
+    @app_commands.command(name="select_stream", description="選擇欲查詢之 Twitch 頻道")
     async def select_stream(self, interaction: discord.Interaction):
         # 讀取實況主資料
         streamer_data = load_streamer_data('streamers.json')
@@ -167,4 +166,4 @@ async def setup(bot):
 # TODO:
 # 1.檢查是否正在實況中，假如正在實況，而查詢的時間點屬於這次直播，則告知使用者目前正在實況:「目前ＸＸＸ正在實況，以下連結會帶您回到稍早的畫面」
 # 2.回覆最新三個實況時，包含正在直播資訊
-# 3. 
+# 3.

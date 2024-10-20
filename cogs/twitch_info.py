@@ -25,8 +25,8 @@ class Twitch_info(commands.Cog):
     async def get_twitch_user_info(self, user_name):
         url = f'https://api.twitch.tv/helix/users?login={user_name}'
         headers = {
-                'Client-ID': TWITCH_CLIENT_ID,
-                'Authorization': f'Bearer {TWITCH_TOKEN}'
+            'Client-ID': TWITCH_CLIENT_ID,
+            'Authorization': f'Bearer {TWITCH_TOKEN}'
         }
 
         response = requests.get(url, headers=headers)
@@ -41,8 +41,8 @@ class Twitch_info(commands.Cog):
     async def get_all_past_streams(self, user_id):
         url = f'https://api.twitch.tv/helix/videos?user_id={user_id}&type=archive'
         headers = {
-                'Client-ID': TWITCH_CLIENT_ID,
-                'Authorization': f'Bearer {TWITCH_TOKEN}'
+            'Client-ID': TWITCH_CLIENT_ID,
+            'Authorization': f'Bearer {TWITCH_TOKEN}'
         }
 
         response = requests.get(url, headers=headers)
@@ -65,7 +65,7 @@ class Twitch_info(commands.Cog):
         if vods:
             for vod in vods:
                 start_time_utc = datetime.fromisoformat(
-                        vod['created_at'][:-1]).replace(tzinfo=pytz.utc)
+                    vod['created_at'][:-1]).replace(tzinfo=pytz.utc)
                 duration_str = vod['duration']
 
                 # 將持續時間轉換為 timedelta
@@ -82,28 +82,31 @@ class Twitch_info(commands.Cog):
                 if len(time_parts) == 2:
                     seconds = int(time_parts[0])
 
-                duration = timedelta(hours=hours, minutes=minutes, seconds=seconds)
+                duration = timedelta(hours=hours,
+                                     minutes=minutes,
+                                     seconds=seconds)
                 end_time_utc = start_time_utc + duration
 
                 # 判斷時間是否在直播期間
                 if start_time_utc <= target_time_utc <= end_time_utc:
                     # 計算時間戳記
                     timestamp_seconds = int(
-                            (target_time_utc - start_time_utc).total_seconds())
+                        (target_time_utc - start_time_utc).total_seconds())
                     return vod['url'], timestamp_seconds, vod['title']
 
         return None, None, None
-    
+
     @app_commands.command(name="time_travel", description="檢查特定時間是否有實況並回傳影片連結")
-    async def time_travel(self, interaction: discord.Interaction, user_name: str,
-                                                month: int, day: int, hour: int, minute: int):
+    async def time_travel(self, interaction: discord.Interaction,
+                          user_name: str, month: int, day: int, hour: int,
+                          minute: int):
         # 獲取當前的年份
         current_year = datetime.now().year
 
         # 將輸入的 GMT+8 時間轉換為 UTC
         local_tz = pytz.timezone('Asia/Taipei')
         local_time = local_tz.localize(
-                datetime(current_year, month, day, hour, minute))
+            datetime(current_year, month, day, hour, minute))
         target_time_utc = local_time.astimezone(pytz.utc)
 
         user_info = await self.get_twitch_user_info(user_name)
@@ -114,30 +117,36 @@ class Twitch_info(commands.Cog):
 
             # 檢查該時間是否有實況
             vod_url, timestamp_seconds, vod_title = await self.check_stream_at_time(
-                    user_id, target_time_utc)
+                user_id, target_time_utc)
 
             embed = discord.Embed(title=f"{user_name}'s Info")
             embed.set_thumbnail(url=avatar_url)
 
             # 新增查詢時間的顯示
             query_time = f"{month}月{day}日 {hour}點{minute}分"
-            embed.add_field(name="查詢時間", value=f"你查詢的是 {query_time}", inline=False)
+            embed.add_field(name="查詢時間",
+                            value=f"你查詢的是 {query_time}",
+                            inline=False)
 
             if vod_url:
                 # 返回帶時間戳的影片連結和 VOD 標題
                 timestamp_url = f"{vod_url}?t={timestamp_seconds}s"
-                embed.add_field(name="Stream Status", value="當時有開台", inline=False)
+                embed.add_field(name="Stream Status",
+                                value="當時有開台",
+                                inline=False)
                 embed.add_field(name="實況連結(帶有時間戳記)",
-                                                value=f"[{vod_title}]({timestamp_url})",
-                                                inline=False)
+                                value=f"[{vod_title}]({timestamp_url})",
+                                inline=False)
             else:
-                embed.add_field(name="Stream Status", value="當時沒有開台", inline=False)
+                embed.add_field(name="Stream Status",
+                                value="當時沒有開台",
+                                inline=False)
 
             await interaction.response.send_message(embed=embed)
 
         else:
             await interaction.response.send_message(f"無法取得 {user_name} 的資訊。",
-                                                                                            ephemeral=True)
+                                                    ephemeral=True)
 
 
 # Setup the bot

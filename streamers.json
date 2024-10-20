@@ -1,54 +1,69 @@
 {
   "streamers": [
     {
-      "name": "KSP",
+      "name": "🐈‍⬛ KSP 💜",
       "twitch_name": "kspksp",
       "hex_color": "#6f42c1"
     },
     {
-      "name": "汐Seki",
+      "name": "💜 汐Seki 🦊",
       "twitch_name": "seki_meridian",
       "hex_color": "#8aa133"
     },
     {
-      "name": "米姬",
+      "name": "🩵 米姬",
       "twitch_name": "migi_tw",
       "hex_color": "#a7c5d7"
     },
     {
-      "name": "烟花蹦蹦蹦",
+      "name": "🐑 烟花蹦蹦蹦",
       "twitch_name": "hennie2001",
       "hex_color": "#cd96a8"
     },
     {
-      "name": "油條",
+      "name": "🐯 油條",
       "twitch_name": "v4181",
       "hex_color": "#992f31"
     },
     {
-      "name": "響Hibiki",
+      "name": "🐣 響Hibiki",
       "twitch_name": "hibiki_meridianproject",
       "hex_color": "#fad864"
     },
     {
-      "name": "橙Yuzumi",
-      "twitch_name": "yuzumi_neon",
-      "hex_color": "#FD8D4E"
+      "name": "🎵 浠Mizuki",
+      "twitch_name": "mizukimilk723",
+      "hex_color": "#88d7d9"
     },
     {
-      "name": "澪Rei",
+      "name": "🍃 澪Rei NEO(n)",
       "twitch_name": "reirei_neon",
       "hex_color": "#c9e0ee"
     },
     {
-      "name": "煌Kirali",
+      "name": "💥 煌Kirali NEO(n)",
       "twitch_name": "kirali_neon",
       "hex_color": "#bd6c85"
     },
     {
-      "name": "浠Mizuki",
-      "twitch_name": "mizukimilk723",
-      "hex_color": "#88d7d9"
+      "name": "🍊 橙Yuzumi NEO(n)",
+      "twitch_name": "yuzumi_neon",
+      "hex_color": "#FD8D4E"
+    },
+    {
+      "name": "🐍 朔Sakuro MΦONLIT",
+      "twitch_name": "sakuro_moonlit",
+      "hex_color": "#c25740"
+    },
+    {
+      "name": "🦎 朧Oboro MΦONLIT",
+      "twitch_name": "oboro_moonlit",
+      "hex_color": "#3c62e7"
+    },
+    {
+      "name": "🐊 宵Yoruno MΦONLIT",
+      "twitch_name": "yoruno_moonlit",
+      "hex_color": "#6d7a4e"
     }
   
   ]
