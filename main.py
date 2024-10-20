@@ -23,6 +23,22 @@ async def Load():
             await bot.load_extension(f'cogs.{filename[:-3]}')
 
 
+# 定義要輪流顯示的狀態
+STATUS_LIST = ["Playing Minecraft", "Coding a Discord Bot", "/demo & 新功能"]
+
+
+async def cycle_status():
+    """每隔幾秒自動更換 Bot 的狀態。"""
+    while True:
+        for status in STATUS_LIST:
+            # 設置 Bot 的狀態
+            activity = discord.Game(name=status)
+            await bot.change_presence(activity=activity)
+
+            # 每隔 30 秒切換一次狀態
+            await asyncio.sleep(30)
+
+
 @bot.event
 async def on_ready():
     # 同步 slash 指令
@@ -32,37 +48,8 @@ async def on_ready():
         print(f"Logged in as {bot.user.name}")
     else:
         print('Something went wrong while initiating the bot.')
-
-    # 設定狀態為「聽音樂」
-    # 目前好像只有聽(音樂) 玩(遊戲) 跟觀賞什麼可以選
-    activity = discord.Activity(type=discord.ActivityType.listening,
-                                name="/demo & 新功能")
-    # TODO:想要 random or 跑馬燈
-    await bot.change_presence(status=discord.Status.online, activity=activity)
-
-
-# # ADD context menu: Join
-# @bot.tree.context_menu(name="Show join date")
-# async def get_joined_date(interaction: discord.Interaction,
-#                           member: discord.Member):
-#     if member.joined_at:
-#         await interaction.response.send_message(
-#             f'Member joined at: {discord.utils.format_dt(member.joined_at)}')
-#     else:
-#         await interaction.response.send_message('Join date unknown.')
-
-# # ADD context menu: MSG
-# @bot.tree.context_menu(name="Show msg create date")
-# async def get_message_create_date(interaction: discord.Interaction,
-#                                   message: discord.Message):
-#     if message.created_at:
-#         await interaction.response.send_message(
-#             f'This msg was created at: {discord.utils.format_dt(message.created_at)}'
-#         )
-#     else:
-#         await interaction.response.send_message('MSG date unknown.')
-
-# async def organize_embed_twitch_msg()
+    # 啟動狀態切換協程
+    bot.loop.create_task(cycle_status())
 
 
 # Context menu: MSG time to VOD feedback
