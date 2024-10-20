@@ -4,14 +4,22 @@ from pickle import TRUE
 
 import discord
 from discord.ext import commands
-# from twitch_info import TwitchInfo  # 匯入 TwitchInfo 類別
+
+# Twitch API 設定
+TWITCH_TOKEN = os.environ['TWITCH_TOKEN']
+TWITCH_CLIENT_ID = os.environ['TWITCH_CLIENT_ID']
 
 # Create a Discord client instance and set the command prefix
 intents = discord.Intents.all()
 client = discord.Client(intents=intents)
 bot = commands.Bot(command_prefix='!', intents=intents)
 
-# bot = commands.Bot(command_prefix="!", intents=discord.Intents.all())
+
+# Load every cog in my cogs folder
+async def Load():
+    for filename in os.listdir('./cogs'):
+        if filename.endswith('.py'):
+            await bot.load_extension(f'cogs.{filename[:-3]}')
 
 
 @bot.event
@@ -56,11 +64,11 @@ async def get_message_create_date(interaction: discord.Interaction,
 
 
 # Context menu: MSG time to VOD feedback
-# @bot.tree.context_menu(name='MSG_VOD')
-# async def get_msg_for_timetravel(
-#     interaction: discord.Interaction,
-#     message: discord.Message,
-# ):
+# @bot.tree.context_menu(name='Seki VOD')
+# async def get_msg_for_timetravel_at_seki(interaction: discord.Interaction,
+#                                          message: discord.Message):
+
+#     user_name = 'seki_meridian'
 
 # Get token
 # with open("token.txt") as file:
@@ -68,12 +76,11 @@ async def get_message_create_date(interaction: discord.Interaction,
 token = os.environ['DISCORD_BOT_TOKEN']
 
 
-# Load every cog in my cogs folder
-async def Load():
-    for filename in os.listdir('./cogs'):
-        if filename.endswith('.py'):
-            await bot.load_extension(f'cogs.{filename[:-3]}')
-
+# # Load every cog in my cogs folder
+# async def Load():
+#     for filename in os.listdir('./cogs'):
+#         if filename.endswith('.py'):
+#             await bot.load_extension(f'cogs.{filename[:-3]}')
 
 # Run main script
 async def main():
