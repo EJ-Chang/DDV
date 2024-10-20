@@ -12,12 +12,12 @@
 ### Todos
 
 - [ ] 修改成不用手動輸入完整 Twitch user name
-- [ ] 機器人權限調整
-- [ ] 功能：/demo 說明
-- [ ] Reply or Repost for the bot to get link
-- [ ] 對訊息右鍵-->機器人查詢
+- [x] 機器人權限調整
+- [x] 功能：/demo 說明
+- [x] ~~Reply or Repost for the bot to get link~~ 改成右鍵了
+- [x] 對訊息右鍵-->機器人查詢
 - [ ] select channel 功能加強
-- [ ] 新功能公告機制
+- [x] 新功能公告機制:之後可用專屬DC SERVER OR STATUS 
 
 ### Commands
 
