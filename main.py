@@ -5,9 +5,12 @@ from pickle import TRUE
 import discord
 from discord.ext import commands
 
+
 # Twitch API 設定
 TWITCH_TOKEN = os.environ['TWITCH_TOKEN']
 TWITCH_CLIENT_ID = os.environ['TWITCH_CLIENT_ID']
+
+
 
 # Create a Discord client instance and set the command prefix
 intents = discord.Intents.all()
