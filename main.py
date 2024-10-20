@@ -4,6 +4,7 @@ from pickle import TRUE
 import requests
 import discord
 from discord.ext import commands
+from datetime import datetime, timedelta
 
 # Twitch API 設定
 TWITCH_TOKEN = os.environ['TWITCH_TOKEN']
@@ -76,21 +77,93 @@ async def username_2_user_info(user_name):
         print(f"Error fetching user info: {response.status_code}")
         return None
 
+# Get all past streams (VODs)
+async def get_all_past_streams(user_id):
+    url = f'https://api.twitch.tv/helix/videos?user_id={user_id}&type=archive'
+    headers = {
+            'Client-ID': TWITCH_CLIENT_ID,
+            'Authorization': f'Bearer {TWITCH_TOKEN}'
+    }
+
+    response = requests.get(url, headers=headers)
+
+    if response.status_code == 200:
+        data = response.json()
+        if 'data' in data and len(data['data']) > 0:
+            return data['data']  # 返回所有 VOD 的資料
+        else:
+            print("No past streams found.")
+            return None
+    else:
+        print(f"Error fetching past streams: {response.status_code}")
+        return None
+
+# 判斷特定時間是否有實況
+async def check_stream(user_name, target_time_utc):
+    user_info =  await username_2_user_info(user_name)
+    if user_info:
+        user_id = user_info['id']
+        vods = await get_all_past_streams(user_id)
+
+        if vods:
+            for vod in vods:
+                start_time_utc = datetime.fromisoformat(
+                        vod['created_at'][:-1]).replace(tzinfo=pytz.utc)
+                duration_str = vod['duration']
+
+                # 將持續時間轉換為 timedelta
+                hours, minutes, seconds = 0, 0, 0
+                time_parts = duration_str.split('h')
+                if len(time_parts) == 2:
+                    hours = int(time_parts[0])
+                    duration_str = time_parts[1]
+                time_parts = duration_str.split('m')
+                if len(time_parts) == 2:
+                    minutes = int(time_parts[0])
+                    duration_str = time_parts[1]
+                time_parts = duration_str.split('s')
+                if len(time_parts) == 2:
+                    seconds = int(time_parts[0])
+
+                duration = timedelta(hours=hours, minutes=minutes, seconds=seconds)
+                end_time_utc = start_time_utc + duration
+
+                # 判斷時間是否在直播期間
+                if start_time_utc <= target_time_utc <= end_time_utc:
+                    # 計算時間戳記
+                    timestamp_seconds = int(
+                            (target_time_utc - start_time_utc).total_seconds())
+                    return vod['url'], timestamp_seconds, vod['title']
+
+    return None, None, None
+# async def organize_embed_twitch_msg()
+
 
 
 # Context menu: MSG time to VOD feedback
-@bot.tree.context_menu(name='Seki VOD')
+@bot.tree.context_menu(name="SEKI's VOD time travel")
 async def get_msg_for_timetravel_at_seki(interaction: discord.Interaction,
                                          message: discord.Message):
 
     user_name = 'seki_meridian'
     user_info = await username_2_user_info(user_name)
+    target_time_utc = message.created_at
     if user_info:
         user_id = user_info['id']
         avatar_url = user_info['profile_image_url']
+        # 檢查該時間是否有實況
+        vod_url, timestamp_seconds, vod_title = await check_stream(
+                user_id, target_time_utc)
+
+        embed = discord.Embed(title=f"{user_name}'s Info")
+        embed.set_thumbnail(url=avatar_url)
+
         embed = discord.Embed(title=f"{user_name}'s Info")
         embed.add_field(name='UserID is:', value=f'{user_id}')
+        embed.add_field(name='查詢的時間是:', value=f'{target_time_utc}')
+        embed.add_field(name='URL', value= vod_url)
         embed.set_thumbnail(url=avatar_url)
+        
         await interaction.response.send_message(embed=embed)
     else:
         await interaction.response.send_message('not working')
