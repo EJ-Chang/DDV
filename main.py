@@ -1,29 +1,24 @@
 import asyncio
 import os
 from pickle import TRUE
-
+import requests
 import discord
 from discord.ext import commands
-
 
 # Twitch API 設定
 TWITCH_TOKEN = os.environ['TWITCH_TOKEN']
 TWITCH_CLIENT_ID = os.environ['TWITCH_CLIENT_ID']
-
-
 
 # Create a Discord client instance and set the command prefix
 intents = discord.Intents.all()
 client = discord.Client(intents=intents)
 bot = commands.Bot(command_prefix='!', intents=intents)
 
-
 # Load every cog in my cogs folder
 async def Load():
     for filename in os.listdir('./cogs'):
         if filename.endswith('.py'):
             await bot.load_extension(f'cogs.{filename[:-3]}')
-
 
 @bot.event
 async def on_ready():
@@ -43,7 +38,7 @@ async def on_ready():
     await bot.change_presence(status=discord.Status.online, activity=activity)
 
 
-# ADD context menu
+# ADD context menu: Join
 @bot.tree.context_menu(name="Show join date")
 async def get_joined_date(interaction: discord.Interaction,
                           member: discord.Member):
@@ -54,7 +49,7 @@ async def get_joined_date(interaction: discord.Interaction,
         await interaction.response.send_message('Join date unknown.')
 
 
-# ADD context menu
+# ADD context menu: MSG
 @bot.tree.context_menu(name="Show msg create date")
 async def get_message_create_date(interaction: discord.Interaction,
                                   message: discord.Message):
@@ -65,25 +60,45 @@ async def get_message_create_date(interaction: discord.Interaction,
     else:
         await interaction.response.send_message('MSG date unknown.')
 
+# Here's twitch info functions I need
+# Get info from Twitch
+async def username_2_user_info(user_name):
+    url = f'https://api.twitch.tv/helix/users?login={user_name}'
+    headers = {
+                'Client-ID': TWITCH_CLIENT_ID,
+                'Authorization': f'Bearer {TWITCH_TOKEN}'}
+
+    response = requests.get(url, headers=headers)
+
+    if response.status_code == 200:
+        return response.json()['data'][0]  # 返回用戶資料
+    else:
+        print(f"Error fetching user info: {response.status_code}")
+        return None
+
+
 
 # Context menu: MSG time to VOD feedback
-# @bot.tree.context_menu(name='Seki VOD')
-# async def get_msg_for_timetravel_at_seki(interaction: discord.Interaction,
-#                                          message: discord.Message):
+@bot.tree.context_menu(name='Seki VOD')
+async def get_msg_for_timetravel_at_seki(interaction: discord.Interaction,
+                                         message: discord.Message):
 
-#     user_name = 'seki_meridian'
+    user_name = 'seki_meridian'
+    user_info = await username_2_user_info(user_name)
+    if user_info:
+        user_id = user_info['id']
+        avatar_url = user_info['profile_image_url']
+        embed = discord.Embed(title=f"{user_name}'s Info")
+        embed.add_field(name='UserID is:', value=f'{user_id}')
+        embed.set_thumbnail(url=avatar_url)
+        await interaction.response.send_message(embed=embed)
+    else:
+        await interaction.response.send_message('not working')
+
 
 # Get token
-# with open("token.txt") as file:
-#   token = file.read()
 token = os.environ['DISCORD_BOT_TOKEN']
 
-
-# # Load every cog in my cogs folder
-# async def Load():
-#     for filename in os.listdir('./cogs'):
-#         if filename.endswith('.py'):
-#             await bot.load_extension(f'cogs.{filename[:-3]}')
 
 # Run main script
 async def main():
