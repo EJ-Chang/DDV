@@ -4,7 +4,6 @@ from pickle import TRUE
 
 import discord
 from discord.ext import commands
-from twitch_info import TwitchInfo  # 匯入 TwitchInfo 類別
 
 # Create a Discord client instance and set the command prefix
 intents = discord.Intents.all()

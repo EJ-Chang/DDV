@@ -1,6 +1,3 @@
 {
-    "python.analysis.autoImportCompletions": true,
-    "python.analysis.extraPaths": [
-        "./cogs"
-    ]
+    "python.analysis.autoImportCompletions": true
 }
