@@ -24,18 +24,21 @@ async def Load():
 
 
 # 定義要輪流顯示的狀態
-STATUS_LIST = ["Playing Minecraft", "Coding a Discord Bot", "/demo & 新功能"]
+STATUS_LIST = [
+    "新功能:右鍵查詢 VOD", "新功能:還在想", "/demo & /news", "煌Sir有汐:知道你們沒看 DVD 但很會 DDV"
+]
 
 
 async def cycle_status():
-    """每隔幾秒自動更換 Bot 的狀態。"""
+    """每隔 30 秒自動更換 Bot 的狀態為 '聆聽' 模式。"""
     while True:
         for status in STATUS_LIST:
-            # 設置 Bot 的狀態
-            activity = discord.Game(name=status)
+            # 使用 discord.Activity 設置為聆聽狀態
+            activity = discord.Activity(type=discord.ActivityType.listening,
+                                        name=status)
             await bot.change_presence(activity=activity)
 
-            # 每隔 30 秒切換一次狀態
+            # 每 30 秒切換一次狀態
             await asyncio.sleep(30)
 
 

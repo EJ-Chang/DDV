@@ -12,11 +12,19 @@
 
 ### Todos
 
-- [ ] 修改成不用手動輸入完整 Twitch user name
+- [ ] 修改成不用手動輸入完整 Twitch user name: 也許用提詞
+- [ ] function 大整理
 - [ ] select stream 功能加強: 分類
 - [ ] 新增 context menu: 右鍵->選其他->droplist->get VOD
 - [ ] youtube 支援
 - [ ] /new 說明更新內容用
+   - [x] 新增數名非子午旗下藝人
+   - [ ] 現在名單有點太長，在思考要怎麼分 
+- [ ] 新增 context menu
+   - [ ] 目前想像:右鍵->選其他->droplist->get VOD
+- [ ] 方便備份: VOD link 一鍵複製
+- [ ] 方便備份: 生成指定時間範圍內的 VOD 連結，一鍵複製 VOD Title
+- [ ] 方便備份: 備份 check list
 - [x] select stream 美化
 - [x] 機器人權限調整
 - [x] 功能：/demo 說明
@@ -57,6 +65,7 @@
    1. 動機：多人聯動時往往只能專心看一個人的視角，但事後補檔要同時播放多個VOD是有點難，所以打算簡單用一個 html 當載體，能夠把 VOD 內嵌進去然後同時播放就好。
 6. 簡便的 VOD 備份輔助器（yt 上傳+權限發佈在私人
    1. 動機：平常有自行備份 VOD 的習慣，僅供自己回味用，不開任何盈利。但我希望這個備份過程更加簡單。另外是看到歌回剪輯大手的頻道無故被 ban，覺得需要有方法讓頻道備份更方便，免得憾事一再發生。
+
 
 ### Related Badges
 
