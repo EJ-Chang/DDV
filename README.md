@@ -12,12 +12,15 @@
 ### Todos
 
 - [ ] 修改成不用手動輸入完整 Twitch user name
+- [ ] select stream 功能加強: 分類
+- [ ] 新增 context menu: 右鍵->選其他->droplist->get VOD
+- [ ] youtube 支援
+- [x] select stream 美化
 - [x] 機器人權限調整
 - [x] 功能：/demo 說明
 - [x] ~~Reply or Repost for the bot to get link~~ 改成右鍵了
 - [x] 對訊息右鍵-->機器人查詢
-- [ ] select channel 功能加強
-- [x] 新功能公告機制:之後可用專屬DC SERVER OR STATUS 
+- [x] 新功能公告機制:之後可用專屬 DC SERVER OR STATUS 
 
 ### Commands
 
@@ -27,7 +30,7 @@
    2. 接著輸入想查詢的時間點，年份已經預設為今年2024，只需手動輸入日期與時間。這裡則以 KSP 為例，假設想查詢的時間點為 10/10 01:23
       ![image](./assets/demo/mins.png)
 
-2. /select_channel: 選擇指令並送出即可，不必另外輸入任何東西。
+2. /select_stream: 選擇指令並送出即可，不必另外輸入任何東西。
    1. 機器人會回覆一個下拉式選單，可以選擇想查詢的實況主/Vtuber，機器人會查出他/她最近的三則 VOD
       ![image](./assets/demo/select%20stream.png)
       ![image](./assets/demo/select%20stream%20feedback.png)
