@@ -15,7 +15,6 @@
 - [ ] 修正 VOD 回查: 往前提早10秒，畢竟打字要時間
 - [ ] 修改成不用手動輸入完整 Twitch user name
 - [ ] select stream 功能加強: 分類
-- [ ] 新增 context menu: 右鍵->選其他->droplist->get VOD
 - [ ] youtube 支援
 - [ ] /new 說明更新內容用
    - [x] 新增數名非子午旗下藝人
@@ -67,6 +66,7 @@
 6. 簡便的 VOD 備份輔助器（yt 上傳+權限發佈在私人
    1. 動機：平常有自行備份 VOD 的習慣，僅供自己回味用，不開任何盈利。但我希望這個備份過程更加簡單。另外是看到歌回剪輯大手的頻道無故被 ban，覺得需要有方法讓頻道備份更方便，免得憾事一再發生。
    2. 評估：Youtube API 有 Python 的，理解起來應該比較快。但會需要把 Twitch API 抓出來的資料送過去（備份 VOD 時)
+7. Chrome extension 夢想: twitch 分類器，想法來自youtube也有類似外掛程式
 
 
 ### Related Badges
