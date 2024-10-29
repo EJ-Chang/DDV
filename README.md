@@ -11,6 +11,7 @@
 
 ### Todos
 
+- [ ] 修正 VOD 回查: 往前提早10秒，畢竟打字要時間
 - [ ] 修改成不用手動輸入完整 Twitch user name
 - [ ] select stream 功能加強: 分類
 - [ ] 新增 context menu: 右鍵->選其他->droplist->get VOD
@@ -44,10 +45,10 @@
    1. 追蹤帳號的代表色如何抓取
    2. 追蹤帳號的代稱可以怎麼設定
 3. 抓取 VOD 聊天室
-4. KSeki 特別版指令: 還沒想好，也許是專門擷取兩人在對方聊天室的留言，並且做成圖片。靈感來自 CodeSnap
-5. 多畫面 DD 重播網頁
-6. 簡便的 VOD 備份（yt 上傳+權限發佈在私人
-7. last of the last:轉作工作用途
+   1. KSeki 特別版指令: 還沒想好，也許是專門擷取兩人在對方聊天室的留言，並且做成圖片。靈感來自 CodeSnap
+4. 多畫面 DD 重播網頁
+5. 簡便的 VOD 備份（yt 上傳+權限發佈在私人
+6. last of the last:轉作工作用途
 
 ### Related Badges
 
