@@ -25,7 +25,11 @@ async def Load():
 
 # 定義要輪流顯示的狀態
 STATUS_LIST = [
-    "新功能:右鍵查詢 VOD", "新功能:還在想", "/demo & /news", "煌Sir有汐:知道你們沒看 DVD 但很會 DDV"
+    "新功能:右鍵查詢更多實況主/V",
+    # "新功能:還在想",
+    # "/demo & /news",
+    "右鍵新功能 & /demo"
+    "煌Sir有汐:知道你們沒看 DVD 但很會 DDV"
 ]
 
 
@@ -125,10 +129,13 @@ async def get_msg_for_timetravel_at_ksp(interaction: discord.Interaction,
     else:
         await interaction.response.send_message('not working', ephemeral=True)
 
-@bot.tree.context_menu(name="[More] 查詢更多實況主/Vtuber 的台")
-async def get_msg_for_timetravel_at_ksp(interaction: discord.Interaction,
-                                        message: discord.Message):
-    async def on_user_selected(interaction: discord.Interaction, user_name: str):
+
+@bot.tree.context_menu(name="查詢更多實況主/Vtuber 的台")
+async def get_msg_for_timetravel_at_more(interaction: discord.Interaction,
+                                         message: discord.Message):
+
+    async def on_user_selected(interaction: discord.Interaction,
+                               user_name: str):
         user_info = await utils.get_twitch_user_info(user_name)
         target_time_utc = utils.discord_to_twitch_datetime(message.created_at)
 
@@ -140,14 +147,17 @@ async def get_msg_for_timetravel_at_ksp(interaction: discord.Interaction,
             embed = utils.create_vod_embed(user_name, user_id, avatar_url,
                                            target_time_utc, vod_url,
                                            timestamp_seconds, vod_title)
-            await interaction.response.send_message(embed=embed, ephemeral=True)
+            await interaction.response.send_message(embed=embed,
+                                                    ephemeral=True)
         else:
-            await interaction.response.send_message('not working', ephemeral=True)
+            await interaction.response.send_message('not working',
+                                                    ephemeral=True)
 
     # 呼叫選單並回應使用者選擇
     view = utils.UserSelectView(on_user_selected)
-    await interaction.response.send_message("請選擇用戶名", view=view, ephemeral=True)
-
+    await interaction.response.send_message("請選擇想查詢的實況頻道",
+                                            view=view,
+                                            ephemeral=True)
 
 
 # Get token
