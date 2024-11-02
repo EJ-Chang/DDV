@@ -1,6 +1,6 @@
-# Baby DD
+# DDV
 
-> The beta version of DDV.
+> The published version of DDV.
 
 ## 專案介紹
 
@@ -22,8 +22,8 @@
   - [x] 新增數名非子午旗下藝人
   - [ ]  現在名單有點太長，在思考要怎麼分 
 - [ ] /new 說明更新內容用
-- [ ] 新增 context menu
-   - [ ] 目前想像:右鍵->選其他->droplist->get VOD
+- [x] 新增 context menu
+   - [x] 目前想像:右鍵->選其他->droplist->get VOD
 
 #### 擴充支援
 - [ ] youtube 支援
