@@ -23,6 +23,29 @@ async def Load():
             await bot.load_extension(f'cogs.{filename[:-3]}')
 
 
+# 定義要輪流顯示的狀態
+STATUS_LIST = [
+    "新功能:右鍵查詢更多實況主/V",
+    # "新功能:還在想",
+    # "/demo & /news",
+    "右鍵新功能 & /demo",
+    "煌Sir有汐:知道你們沒看 DVD 但很會 DDV"
+]
+
+
+async def cycle_status():
+    """每隔 30 秒自動更換 Bot 的狀態為 '聆聽' 模式。"""
+    while True:
+        for status in STATUS_LIST:
+            # 使用 discord.Activity 設置為聆聽狀態
+            activity = discord.Activity(type=discord.ActivityType.listening,
+                                        name=status)
+            await bot.change_presence(activity=activity)
+
+            # 每 30 秒切換一次狀態
+            await asyncio.sleep(30)
+
+
 @bot.event
 async def on_ready():
     # 同步 slash 指令
@@ -32,37 +55,8 @@ async def on_ready():
         print(f"Logged in as {bot.user.name}")
     else:
         print('Something went wrong while initiating the bot.')
-
-    # 設定狀態為「聽音樂」
-    # 目前好像只有聽(音樂) 玩(遊戲) 跟觀賞什麼可以選
-    activity = discord.Activity(type=discord.ActivityType.listening,
-                                name="/demo & 新功能")
-    # TODO:想要 random or 跑馬燈
-    await bot.change_presence(status=discord.Status.online, activity=activity)
-
-
-# # ADD context menu: Join
-# @bot.tree.context_menu(name="Show join date")
-# async def get_joined_date(interaction: discord.Interaction,
-#                           member: discord.Member):
-#     if member.joined_at:
-#         await interaction.response.send_message(
-#             f'Member joined at: {discord.utils.format_dt(member.joined_at)}')
-#     else:
-#         await interaction.response.send_message('Join date unknown.')
-
-# # ADD context menu: MSG
-# @bot.tree.context_menu(name="Show msg create date")
-# async def get_message_create_date(interaction: discord.Interaction,
-#                                   message: discord.Message):
-#     if message.created_at:
-#         await interaction.response.send_message(
-#             f'This msg was created at: {discord.utils.format_dt(message.created_at)}'
-#         )
-#     else:
-#         await interaction.response.send_message('MSG date unknown.')
-
-# async def organize_embed_twitch_msg()
+    # 啟動狀態切換協程
+    bot.loop.create_task(cycle_status())
 
 
 # Context menu: MSG time to VOD feedback
@@ -134,6 +128,36 @@ async def get_msg_for_timetravel_at_ksp(interaction: discord.Interaction,
         await interaction.response.send_message(embed=embed, ephemeral=True)
     else:
         await interaction.response.send_message('not working', ephemeral=True)
+
+
+@bot.tree.context_menu(name="查詢更多實況主/Vtuber 的台")
+async def get_msg_for_timetravel_at_more(interaction: discord.Interaction,
+                                         message: discord.Message):
+
+    async def on_user_selected(interaction: discord.Interaction,
+                               user_name: str):
+        user_info = await utils.get_twitch_user_info(user_name)
+        target_time_utc = utils.discord_to_twitch_datetime(message.created_at)
+
+        if user_info:
+            user_id = user_info['id']
+            avatar_url = user_info['profile_image_url']
+            vod_url, timestamp_seconds, vod_title = await utils.check_stream(
+                user_id, target_time_utc) or (None, None, None)
+            embed = utils.create_vod_embed(user_name, user_id, avatar_url,
+                                           target_time_utc, vod_url,
+                                           timestamp_seconds, vod_title)
+            await interaction.response.send_message(embed=embed,
+                                                    ephemeral=True)
+        else:
+            await interaction.response.send_message('not working',
+                                                    ephemeral=True)
+
+    # 呼叫選單並回應使用者選擇
+    view = utils.UserSelectView(on_user_selected)
+    await interaction.response.send_message("請選擇想查詢的實況頻道",
+                                            view=view,
+                                            ephemeral=True)
 
 
 # Get token

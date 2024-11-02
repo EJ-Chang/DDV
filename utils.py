@@ -110,7 +110,7 @@ def create_vod_embed(user_name: str, user_id: str, avatar_url: str,
     # embed = discord.Embed(title=f"{user_name}'s Info")
     embed = discord.Embed(title=f'VOD 時光機@{user_name}')
     embed.set_thumbnail(url=avatar_url)
-    embed.add_field(name='UserID is:', value=f'{user_id}', inline=False)
+    # embed.add_field(name='UserID is:', value=f'{user_id}', inline=False)
     embed.add_field(name='您查詢的時間是:',
                     value=f'{discord.utils.format_dt(target_time_utc)}',
                     inline=False)
@@ -118,12 +118,12 @@ def create_vod_embed(user_name: str, user_id: str, avatar_url: str,
     if vod_url:
         # 如果有開台，添加帶有時間戳的 VOD 連結
         timestamp_url = f"{vod_url}?t={timestamp_seconds}s"
-        embed.add_field(name="Stream Status", value="當時正在開台", inline=False)
+        embed.add_field(name="實況狀態", value="當時正在開台", inline=False)
         embed.add_field(name="實況連結(帶有時間戳記)",
                         value=f"[{vod_title}]({timestamp_url})",
                         inline=False)
     else:
-        embed.add_field(name="Stream Status", value="當時沒有開台", inline=False)
+        embed.add_field(name="實況狀態", value="當時沒有開台", inline=False)
 
     return embed
 
@@ -146,3 +146,40 @@ def load_streamer_data(file_path):
 def hex_to_rgb_int(hex_color):
     hex_color = hex_color.lstrip('#')  # 移除 #
     return int(hex_color, 16)  # 將HEX轉為整數
+
+
+# Streamer Droplist ()
+class UserSelect(discord.ui.Select):
+
+    def __init__(self, callback):
+        # 讀取 JSON 檔案中的實況主資料
+        with open('streamers.json', 'r', encoding='utf-8') as f:
+            streamer_data = json.load(f)['streamers']
+
+        # 根據 streamer_data 動態生成選項
+        options = [
+            discord.SelectOption(label=streamer['name'],
+                                 value=streamer['twitch_name'])
+            for streamer in streamer_data
+        ]
+
+        super().__init__(placeholder="選擇用戶名...",
+                         options=options,
+                         min_values=1,
+                         max_values=1)
+        self.user_callback = callback  # 儲存自訂的 callback
+
+    async def callback(self, interaction: discord.Interaction):
+        # 使用自訂的 callback 處理選擇
+        await self.user_callback(interaction, self.values[0])
+
+
+# 定義一個 View 來包含 drop list
+class UserSelectView(discord.ui.View):
+
+    def __init__(self, callback):
+        super().__init__()
+        self.add_item(UserSelect(callback))
+
+
+# # Streamer Droplist
