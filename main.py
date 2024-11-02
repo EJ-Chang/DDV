@@ -125,6 +125,30 @@ async def get_msg_for_timetravel_at_ksp(interaction: discord.Interaction,
     else:
         await interaction.response.send_message('not working', ephemeral=True)
 
+@bot.tree.context_menu(name="[More] 查詢更多實況主/Vtuber 的台")
+async def get_msg_for_timetravel_at_ksp(interaction: discord.Interaction,
+                                        message: discord.Message):
+    async def on_user_selected(interaction: discord.Interaction, user_name: str):
+        user_info = await utils.get_twitch_user_info(user_name)
+        target_time_utc = utils.discord_to_twitch_datetime(message.created_at)
+
+        if user_info:
+            user_id = user_info['id']
+            avatar_url = user_info['profile_image_url']
+            vod_url, timestamp_seconds, vod_title = await utils.check_stream(
+                user_id, target_time_utc) or (None, None, None)
+            embed = utils.create_vod_embed(user_name, user_id, avatar_url,
+                                           target_time_utc, vod_url,
+                                           timestamp_seconds, vod_title)
+            await interaction.response.send_message(embed=embed, ephemeral=True)
+        else:
+            await interaction.response.send_message('not working', ephemeral=True)
+
+    # 呼叫選單並回應使用者選擇
+    view = utils.UserSelectView(on_user_selected)
+    await interaction.response.send_message("請選擇用戶名", view=view, ephemeral=True)
+
+
 
 # Get token
 token = os.environ['DISCORD_BOT_TOKEN']
