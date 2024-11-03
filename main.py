@@ -100,6 +100,11 @@ async def get_msg_for_timetravel_at_seki(interaction: discord.Interaction,
                                        timestamp_seconds, vod_title)
 
         await interaction.response.send_message(embed=embed, ephemeral=True)
+        try:
+            await interaction.user.send("以下是 Seki 當下的開台狀況與連結", embed=embed)
+        except discord.Forbidden:
+            await interaction.followup.send(
+                "無法傳送私訊。若您希望機器人可以透過私訊傳送查詢結果給您，請允許群組內成員傳送私訊給您", ephemeral=True)
     else:
         await interaction.response.send_message('not working', ephemeral=True)
 
@@ -126,6 +131,12 @@ async def get_msg_for_timetravel_at_ksp(interaction: discord.Interaction,
                                        timestamp_seconds, vod_title)
 
         await interaction.response.send_message(embed=embed, ephemeral=True)
+        try:
+            await interaction.user.send("以下是 KSP 當下的開台狀況與連結", embed=embed)
+        except discord.Forbidden:
+            await interaction.followup.send(
+                "無法傳送私訊。若您希望機器人可以透過私訊傳送查詢結果給您，請允許群組內成員傳送私訊給您", ephemeral=True)
+
     else:
         await interaction.response.send_message('not working', ephemeral=True)
 
@@ -134,6 +145,7 @@ async def get_msg_for_timetravel_at_ksp(interaction: discord.Interaction,
 async def get_msg_for_timetravel_at_more(interaction: discord.Interaction,
                                          message: discord.Message):
 
+    # 定義用於選擇的 callback 函數，嵌套在主函數中
     async def on_user_selected(interaction: discord.Interaction,
                                user_name: str):
         user_info = await utils.get_twitch_user_info(user_name)
@@ -147,25 +159,26 @@ async def get_msg_for_timetravel_at_more(interaction: discord.Interaction,
             embed = utils.create_vod_embed(user_name, user_id, avatar_url,
                                            target_time_utc, vod_url,
                                            timestamp_seconds, vod_title)
-            await interaction.response.send_message(embed=embed,
-                                                    ephemeral=True)
-            try: await interaction.user.send("這是您剛才查詢的實況資訊", embed=embed)
-            except discord.Forbidden:
-                #無法DM user
-                await interaction.followup.send("很抱歉，由於您目前的設定不接受私訊，機器人無法傳送訊息給您", ephemeral=True)
+
+            # 在 DM 中傳送查詢結果
+            await interaction.response.send_message(embed=embed)
         else:
-            await interaction.response.send_message('not working',
-                                                    ephemeral=True)
+            await interaction.response.send_message("無法找到相關資訊")
 
-    # 呼叫選單並回應使用者選擇
-    view = utils.UserSelectView(on_user_selected)
-    await interaction.response.send_message("請選擇想查詢的實況頻道",
-                                            view=view,
-                                            ephemeral=True)
+    # 傳送私訊並展示選單
+    try:
+        # 傳送初始訊息到 DM，包含選單
+        await interaction.user.send(
+            "請選擇想查詢的實況頻道", view=utils.UserSelectView(on_user_selected))
 
+        # 回應使用者在頻道中的操作，讓他們知道已收到 DM
+        await interaction.response.send_message("機器人已傳送私訊給您，請在私訊中選擇想查詢的頻道",
+                                                ephemeral=True)
 
-
-
+    except discord.Forbidden:
+        # 若無法發送私訊，回覆錯誤訊息
+        await interaction.response.send_message(
+            "無法傳送私訊。若您希望機器人可以透過私訊傳送查詢結果給您，請允許群組內成員傳送私訊給您", ephemeral=True)
 
 
 # Get token
