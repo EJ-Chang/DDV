@@ -149,6 +149,10 @@ async def get_msg_for_timetravel_at_more(interaction: discord.Interaction,
                                            timestamp_seconds, vod_title)
             await interaction.response.send_message(embed=embed,
                                                     ephemeral=True)
+            try: await interaction.user.send("這是您剛才查詢的實況資訊", embed=embed)
+            except discord.Forbidden:
+                #無法DM user
+                await interaction.followup.send("很抱歉，由於您目前的設定不接受私訊，機器人無法傳送訊息給您", ephemeral=True)
         else:
             await interaction.response.send_message('not working',
                                                     ephemeral=True)
@@ -158,6 +162,10 @@ async def get_msg_for_timetravel_at_more(interaction: discord.Interaction,
     await interaction.response.send_message("請選擇想查詢的實況頻道",
                                             view=view,
                                             ephemeral=True)
+
+
+
+
 
 
 # Get token
