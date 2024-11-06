@@ -14,24 +14,27 @@
 
 #### 功能加強
 - [ ] 加強 VOD 回查: 
-  - [ ] 往前提早10秒，畢竟打字要時間
-  - [ ] 目前想法先給當下 VOD
+  - [x] 目前想法先給當下 VOD
   - [ ] 底下新增兩三個按鈕 ↺往回1分鐘 ↺往回30秒 ↺往回10秒 這些選項
+  - [ ] UX: 脈絡加強 引用點選的原文 這樣如果查了很多條 就比較不會忘記想看的目標是甚麼  
 - [ ] 修改成不用手動輸入完整 Twitch user name
 - [ ] select stream 功能加強: 分類
   - [x] 新增數名非子午旗下藝人
-  - [ ]  現在名單有點太長，在思考要怎麼分 
+  - [ ] Can I get list from the user?
+  - [ ] DropList->DropList? just like folders
 - [ ] /new 說明更新內容用
 - [x] 新增 context menu
    - [x] 目前想像:右鍵->選其他->droplist->get VOD
 
 #### 擴充支援
 - [ ] youtube 支援
+- [ ] DD helper: 手機無法一口氣跟兩個台。那我的網頁可以同時播兩個vod吧
 
 #### 擴充功能
 - [ ] 方便備份: VOD link 一鍵複製
 - [ ] 方便備份: 生成指定時間範圍內的 VOD 連結，一鍵複製 VOD Title
 - [ ] 方便備份: 備份 check list
+- [ ] arduino 一鍵WIRELESS做標記
 
 #### 已完成
 - [x] select stream 美化
@@ -76,6 +79,10 @@
    1. 動機：平常有自行備份 VOD 的習慣，僅供自己回味用，不開任何盈利。但我希望這個備份過程更加簡單。另外是看到歌回剪輯大手的頻道無故被 ban，覺得需要有方法讓頻道備份更方便，免得憾事一再發生。
    2. 評估：Youtube API 有 Python 的，理解起來應該比較快。但會需要把 Twitch API 抓出來的資料送過去（備份 VOD 時)
 6. Chrome extension 夢想: twitch 分類器，想法來自youtube也有類似外掛程式
+7. YT/VOD markdwon 時間軸
+   1. 靈感來自 Logseq 對 yt 影片的支援，可以透過快速鍵隨時新增筆記項目
+   2. 好像可以跟 BOT 連動:查詢當下留言 引用留言 建立 vod 的時間戳記 同一支 vod 在同一篇筆記上
+   3. 又一個可以移植到工作上的功能...訪談時間戳記
 
 
 ### Related Badges
