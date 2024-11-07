@@ -22,6 +22,7 @@
   - [ ] DropList->DropList? 
 - [ ] /new 說明更新內容用
 
+
 #### 擴充支援
 - [ ] youtube 支援
 - [ ] DD helper: 手機無法一口氣跟兩個台。那我的網頁可以同時播兩個vod吧
@@ -30,7 +31,8 @@
 - [ ] 方便備份: VOD link 一鍵複製
 - [ ] 方便備份: 生成指定時間範圍內的 VOD 連結，一鍵複製 VOD Title
 - [ ] 方便備份: 備份 check list
-- [ ] arduino 一鍵WIRELESS做標記
+- [ ] arduino 一鍵 WIRELESS 做標記
+- [ ] Send a message to DC bot --> make it a timestamp
 
 ### Commands
 
