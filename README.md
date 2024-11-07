@@ -1,6 +1,6 @@
-# DDV
+# Baby DD
 
-> The published version of DDV.
+> The Beta version of DDV.
 
 ## 專案介紹
 
