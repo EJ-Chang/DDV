@@ -12,6 +12,12 @@
 
 ### Todos
 
+#### Refactoring
+- [ ] twitch api
+  - 這是為了讓之後導入 yt api 變得更容易
+- [ ] bot message
+  - 訊息格式
+
 #### 功能加強
 - [ ] 加強 VOD 回查: 
   - [ ] 往前提早10秒，畢竟打字要時間

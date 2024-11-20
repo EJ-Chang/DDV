@@ -67,33 +67,13 @@ async def get_msg_for_timetravel_at_seki(interaction: discord.Interaction,
     user_name = 'seki_meridian'
     user_info = await utils.get_twitch_user_info(user_name)
     target_time_utc = utils.discord_to_twitch_datetime(message.created_at)
-
+   
     if user_info:
         user_id = user_info['id']
         avatar_url = user_info['profile_image_url']
         # 檢查該時間是否有實況
         vod_url, timestamp_seconds, vod_title = await utils.check_stream(
             user_id, target_time_utc) or (None, None, None)
-
-        # embed = discord.Embed(title=f"{user_name}'s Info")
-        # embed.set_thumbnail(url=avatar_url)
-
-        # embed = discord.Embed(title=f"{user_name}'s Info")
-        # embed.add_field(name='UserID is:', value=f'{user_id}')
-        # embed.add_field(name='查詢的時間是:', value=f'{target_time_utc}')
-        # # embed.add_field(name='URL', value= vod_url)
-        # if vod_url:
-        #     # 返回帶時間戳的影片連結和 VOD 標題
-        #     timestamp_url = f"{vod_url}?t={timestamp_seconds}s"
-        #     embed.add_field(name="Stream Status", value="當時有開台", inline=False)
-        #     embed.add_field(name="實況連結(帶有時間戳記)",
-        #                     value=f"[{vod_title}]({timestamp_url})",
-        #                     inline=False)
-        # else:
-        #     embed.add_field(name="Stream Status", value="當時沒有開台", inline=False)
-
-        # # await interaction.response.send_message(embed=embed)
-        # embed.set_thumbnail(url=avatar_url)
         # 使用模組化的 embed 函數
         embed = utils.create_vod_embed(user_name, user_id, avatar_url,
                                        target_time_utc, vod_url,
