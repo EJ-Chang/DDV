@@ -1,7 +1,7 @@
 # DDV
 
 > The published version of DDV.
-
+> 
 ## 專案介紹
 
 這專案算是我用來複習多年沒碰的 Python，以及嘗試利用 AI 幫助我學習以前沒用過的東西，例如使用 Discord API 以及 Twitch API。下定決心把專案完成，靠的是當初在心中默默獻祭的約束力，畢竟主推們說到做到，身為粉絲當然也不能食言而肥。
@@ -12,35 +12,35 @@
 
 ### Todos
 
+#### 還債
+- [ ] 函數整理一遍，尤其twitch那塊
+  - [ ] 把來自 Twitch 的訊息一次整理起來
+  - [ ] 把 embed msg 仰賴 twitch 資料結構的程度降低，讓他只需要吃基本資料，例如哪一位實況主，其他都讓別的函數去判斷
+  - [ ] 減少巢套式邏輯
+  - [ ] 雖然越看越覺得不好玩，但是該做的大掃除還是要做
+
 #### 功能加強
 - [ ] 加強 VOD 回查: 
-  - [ ] 往前提早10秒，畢竟打字要時間
-  - [ ] 目前想法先給當下 VOD
   - [ ] 底下新增兩三個按鈕 ↺往回1分鐘 ↺往回30秒 ↺往回10秒 這些選項
+  - [ ] UX: 脈絡加強 引用點選的原文 這樣如果查了很多條 就比較不會忘記想看的目標是甚麼  
 - [ ] 修改成不用手動輸入完整 Twitch user name
 - [ ] select stream 功能加強: 分類
   - [x] 新增數名非子午旗下藝人
   - [x] 新增扉暮【IANVS】
   - [ ]  現在名單有點太長，在思考要怎麼分 
 - [ ] /new 說明更新內容用
-- [x] 新增 context menu
-   - [x] 目前想像:右鍵->選其他->droplist->get VOD
+
 
 #### 擴充支援
 - [ ] youtube 支援
+- [ ] DD helper: 手機無法一口氣跟兩個台。那我的網頁可以同時播兩個vod吧
 
 #### 擴充功能
 - [ ] 方便備份: VOD link 一鍵複製
 - [ ] 方便備份: 生成指定時間範圍內的 VOD 連結，一鍵複製 VOD Title
 - [ ] 方便備份: 備份 check list
-
-#### 已完成
-- [x] select stream 美化
-- [x] 機器人權限調整
-- [x] 功能：/demo 說明
-- [x] ~~Reply or Repost for the bot to get link~~ 改成右鍵了
-- [x] 對訊息右鍵-->機器人查詢
-- [x] 新功能公告機制:之後可用專屬 DC SERVER OR STATUS 
+- [ ] arduino 一鍵 WIRELESS 做標記
+- [ ] Send a message to DC bot --> make it a timestamp
 
 ### Commands
 
@@ -77,6 +77,10 @@
    1. 動機：平常有自行備份 VOD 的習慣，僅供自己回味用，不開任何盈利。但我希望這個備份過程更加簡單。另外是看到歌回剪輯大手的頻道無故被 ban，覺得需要有方法讓頻道備份更方便，免得憾事一再發生。
    2. 評估：Youtube API 有 Python 的，理解起來應該比較快。但會需要把 Twitch API 抓出來的資料送過去（備份 VOD 時)
 6. Chrome extension 夢想: twitch 分類器，想法來自youtube也有類似外掛程式
+7. YT/VOD markdwon 時間軸
+   1. 靈感來自 Logseq 對 yt 影片的支援，可以透過快速鍵隨時新增筆記項目
+   2. 好像可以跟 BOT 連動:查詢當下留言 引用留言 建立 vod 的時間戳記 同一支 vod 在同一篇筆記上
+   3. 又一個可以移植到工作上的功能...訪談時間戳記
 
 
 ### Related Badges

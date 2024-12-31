@@ -7,8 +7,8 @@ from discord.ext import commands
 import utils
 
 # Twitch API 設定
-TWITCH_TOKEN = os.environ['TWITCH_TOKEN']
-TWITCH_CLIENT_ID = os.environ['TWITCH_CLIENT_ID']
+TWITCH_TOKEN = os.getenv('TWITCH_TOKEN', '')
+TWITCH_CLIENT_ID = os.getenv('TWITCH_CLIENT_ID', '')
 
 # Create a Discord client instance and set the command prefix
 intents = discord.Intents.all()
@@ -29,7 +29,7 @@ STATUS_LIST = [
     # "新功能:還在想",
     # "/demo & /news",
     "右鍵新功能 & /demo",
-    "煌Sir有汐:知道你們沒看 DVD 但很會 DDV"
+    "2025 繼續支持煌Sir有汐"
 ]
 
 
@@ -43,7 +43,7 @@ async def cycle_status():
             await bot.change_presence(activity=activity)
 
             # 每 30 秒切換一次狀態
-            await asyncio.sleep(30)
+            await asyncio.sleep(3600)
 
 
 @bot.event
@@ -75,25 +75,6 @@ async def get_msg_for_timetravel_at_seki(interaction: discord.Interaction,
         vod_url, timestamp_seconds, vod_title = await utils.check_stream(
             user_id, target_time_utc) or (None, None, None)
 
-        # embed = discord.Embed(title=f"{user_name}'s Info")
-        # embed.set_thumbnail(url=avatar_url)
-
-        # embed = discord.Embed(title=f"{user_name}'s Info")
-        # embed.add_field(name='UserID is:', value=f'{user_id}')
-        # embed.add_field(name='查詢的時間是:', value=f'{target_time_utc}')
-        # # embed.add_field(name='URL', value= vod_url)
-        # if vod_url:
-        #     # 返回帶時間戳的影片連結和 VOD 標題
-        #     timestamp_url = f"{vod_url}?t={timestamp_seconds}s"
-        #     embed.add_field(name="Stream Status", value="當時有開台", inline=False)
-        #     embed.add_field(name="實況連結(帶有時間戳記)",
-        #                     value=f"[{vod_title}]({timestamp_url})",
-        #                     inline=False)
-        # else:
-        #     embed.add_field(name="Stream Status", value="當時沒有開台", inline=False)
-
-        # # await interaction.response.send_message(embed=embed)
-        # embed.set_thumbnail(url=avatar_url)
         # 使用模組化的 embed 函數
         embed = utils.create_vod_embed(user_name, user_id, avatar_url,
                                        target_time_utc, vod_url,
@@ -182,7 +163,9 @@ async def get_msg_for_timetravel_at_more(interaction: discord.Interaction,
 
 
 # Get token
-token = os.environ['DISCORD_BOT_TOKEN']
+token = os.getenv('DISCORD_BOT_TOKEN')
+if not token:
+    raise ValueError("DISCORD_BOT_TOKEN environment variable must be set")
 
 
 # Run main script

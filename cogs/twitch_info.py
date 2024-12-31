@@ -80,7 +80,7 @@ class Twitch_info(commands.Cog):
                     duration_str = time_parts[1]
                 time_parts = duration_str.split('s')
                 if len(time_parts) == 2:
-                    seconds = int(time_parts[0])
+                    seconds = int(time_parts[0]) 
 
                 duration = timedelta(hours=hours,
                                      minutes=minutes,
@@ -98,10 +98,11 @@ class Twitch_info(commands.Cog):
 
     @app_commands.command(name="time_travel", description="檢查特定時間是否有實況並回傳影片連結")
     async def time_travel(self, interaction: discord.Interaction,
-                          user_name: str, month: int, day: int, hour: int,
+                          user_name: str, year:int, month: int, day: int, hour: int,
                           minute: int):
         # 獲取當前的年份
-        current_year = datetime.now().year
+        # current_year = datetime.now().year
+        current_year = year
 
         # 將輸入的 GMT+8 時間轉換為 UTC
         local_tz = pytz.timezone('Asia/Taipei')
