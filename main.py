@@ -29,7 +29,7 @@ STATUS_LIST = [
     # "新功能:還在想",
     # "/demo & /news",
     "右鍵新功能 & /demo",
-    "煌Sir有汐:知道你們沒看 DVD 但很會 DDV"
+    "2025 繼續支持煌Sir有汐"
 ]
 
 
@@ -43,7 +43,7 @@ async def cycle_status():
             await bot.change_presence(activity=activity)
 
             # 每 30 秒切換一次狀態
-            await asyncio.sleep(30)
+            await asyncio.sleep(3600)
 
 
 @bot.event
@@ -163,7 +163,9 @@ async def get_msg_for_timetravel_at_more(interaction: discord.Interaction,
 
 
 # Get token
-token = os.getenv('DISCORD_BOT_TOKEN', '')
+token = os.getenv('DISCORD_BOT_TOKEN')
+if not token:
+    raise ValueError("DISCORD_BOT_TOKEN environment variable must be set")
 
 
 # Run main script
