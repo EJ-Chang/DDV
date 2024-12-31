@@ -41,15 +41,25 @@
       "hex_color": "#c9e0ee"
     },
     {
+      "name": "🍊 橙Yuzumi NEO(n)",
+      "twitch_name": "yuzumi_neon",
+      "hex_color": "#FD8D4E"
+    },
+    {
       "name": "💥 煌Kirali NEO(n)",
       "twitch_name": "kirali_neon",
       "hex_color": "#bd6c85"
     },
     {
-      "name": "🍊 橙Yuzumi NEO(n)",
-      "twitch_name": "yuzumi_neon",
-      "hex_color": "#FD8D4E"
+      "name": "👼🏻 祈Iruni IANVS",
+      "twitch_name": "iruni_ianvs",
+      "hex_color": "#4884b8"
     },
+    {
+      "name": "⛓️ 玥Itsuki IANVS",
+      "twitch_name": "itsuki_ianvs",
+      "hex_color": "#8b0000"
+    },    
     {
       "name": "🐍 朔Sakuro MΦONLIT",
       "twitch_name": "sakuro_moonlit",

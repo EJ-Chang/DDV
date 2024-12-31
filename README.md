@@ -20,6 +20,7 @@
 - [ ] 修改成不用手動輸入完整 Twitch user name
 - [ ] select stream 功能加強: 分類
   - [x] 新增數名非子午旗下藝人
+  - [x] 新增扉暮【IANVS】
   - [ ]  現在名單有點太長，在思考要怎麼分 
 - [ ] /new 說明更新內容用
 - [x] 新增 context menu
